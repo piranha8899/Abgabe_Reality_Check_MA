@@ -32,9 +32,15 @@ public class UIButtonHandler : MonoBehaviour
    
     void ShowOverlay()
     {
+        //Debug.Log("Button clicked");
         if (overlayImage != null)
         {
+            //Debug.Log("Show overlay");
             overlayImage.SetActive(true);
+        }
+        else
+        {
+            Debug.Log("Overlay ref not found");
         }
         
     }
