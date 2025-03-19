@@ -36,11 +36,33 @@ public class SceneProgressManager : MonoBehaviour
     
     public LevelCondition[] completionConditions;
 
+    //Levelabschluss-Key
+    [Header("Level Completion")]
+    public string levelCompletionKey = "levelCompleted";
+    private bool isLevelCompleted = false;
+    public System.Action<bool> OnLevelCompletionChanged;
+
+    public bool IsLevelCompleted 
+    { 
+        get { return isLevelCompleted; }
+        private set
+        {
+            if (isLevelCompleted != value)
+            {
+                isLevelCompleted = value;
+                OnLevelCompletionChanged?.Invoke(isLevelCompleted);
+                SetValue(levelCompletionKey, isLevelCompleted);
+            }
+        }
+    }
+    
+
     void Awake()
     {
         if (instance == null)
         {
             instance = this;
+            isLevelCompleted = GetValue(levelCompletionKey, false);
         }
         else
         {
@@ -78,6 +100,7 @@ public class SceneProgressManager : MonoBehaviour
             if (!sceneValues.ContainsKey(condition.key))
             {
                 Debug.Log($"Fehlender Wert für Key: {condition.key}");
+                IsLevelCompleted = false;
                 return false;
             }
 
@@ -108,7 +131,20 @@ public class SceneProgressManager : MonoBehaviour
         }
         
         Debug.Log("Alle Level-Bedingungen erfüllt!");
+        IsLevelCompleted = true;
+
         return true;
+    }
+
+    public void SetLevelCompleted(bool completed)
+    {
+        IsLevelCompleted = completed;
+    }
+
+    public void ResetLevel()
+    {
+        sceneValues.Clear();
+        IsLevelCompleted = false;
     }
 
      
