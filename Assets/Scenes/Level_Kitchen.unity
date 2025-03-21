@@ -286,6 +286,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 476b27b1302e6a04a87e663069dd7d50, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  levelIdentifier: level_kitchen
   completionConditions:
   - key: backofen_umluft
     valueType: 0
@@ -305,7 +306,6 @@ MonoBehaviour:
     expectedInt: -18
     expectedFloat: 0
     expectedString: 
-  levelCompletionKey: levelCompleted
 --- !u!4 &36464503
 Transform:
   m_ObjectHideFlags: 0
@@ -1421,7 +1421,6 @@ GameObject:
   - component: {fileID: 592050350}
   - component: {fileID: 592050349}
   - component: {fileID: 592050348}
-  - component: {fileID: 592050347}
   m_Layer: 5
   m_Name: Kitchen_UI
   m_TagString: Untagged
@@ -1429,18 +1428,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &592050347
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 592050346}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e210a1df56bb7aa40876fd608cbecc1b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &592050348
 MonoBehaviour:
   m_ObjectHideFlags: 0

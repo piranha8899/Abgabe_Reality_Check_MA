@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class SceneProgressManager : MonoBehaviour
 {
@@ -38,7 +39,8 @@ public class SceneProgressManager : MonoBehaviour
 
     //Levelabschluss-Key
     [Header("Level Completion")]
-    public string levelCompletionKey = "levelCompleted";
+    public string levelIdentifier; // z.B. "Level1", "Tutorial" etc.
+    private string SaveKey => $"Level_{levelIdentifier}_Completed";
     private bool isLevelCompleted = false;
     public System.Action<bool> OnLevelCompletionChanged;
 
@@ -51,7 +53,9 @@ public class SceneProgressManager : MonoBehaviour
             {
                 isLevelCompleted = value;
                 OnLevelCompletionChanged?.Invoke(isLevelCompleted);
-                SetValue(levelCompletionKey, isLevelCompleted);
+                SetValue(SaveKey, isLevelCompleted); // Nutze SaveKey statt levelCompletionKey
+                PlayerPrefs.SetInt(SaveKey, value ? 1 : 0);
+                PlayerPrefs.Save();
             }
         }
     }
@@ -62,7 +66,9 @@ public class SceneProgressManager : MonoBehaviour
         if (instance == null)
         {
             instance = this;
-            isLevelCompleted = GetValue(levelCompletionKey, false);
+            // Lade den gespeicherten Zustand
+            isLevelCompleted = PlayerPrefs.GetInt(SaveKey, 0) == 1;
+            SetValue(SaveKey, isLevelCompleted);
         }
         else
         {
@@ -147,5 +153,15 @@ public class SceneProgressManager : MonoBehaviour
         IsLevelCompleted = false;
     }
 
-     
+    public static void ResetAllLevels()
+    {
+    PlayerPrefs.DeleteAll();
+    PlayerPrefs.Save();
+    Debug.Log("Alle Level-Fortschritte wurden zurückgesetzt");
+    Scene currentScene = SceneManager.GetActiveScene();
+    SceneManager.LoadScene(currentScene.name);
+    }
+
+
+
 }
