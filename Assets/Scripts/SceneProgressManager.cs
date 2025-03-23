@@ -8,7 +8,19 @@ public class SceneProgressManager : MonoBehaviour
     private static SceneProgressManager instance;
     public static SceneProgressManager Instance
     {
-        get { return instance; }
+        get
+        {
+            if (instance == null)
+            {
+                instance = FindObjectOfType<SceneProgressManager>();
+                if (instance == null)
+                {
+                    GameObject go = new GameObject("SceneProgressManager");
+                    instance = go.AddComponent<SceneProgressManager>();
+                }
+            }
+            return instance;
+        }
     }
     
     //Dictionary zum Speichern verschiedener Werte anlegen
@@ -51,13 +63,17 @@ public class SceneProgressManager : MonoBehaviour
         {
             if (isLevelCompleted != value)
             {
-                isLevelCompleted = value;
-                OnLevelCompletionChanged?.Invoke(isLevelCompleted);
-                SetValue(SaveKey, isLevelCompleted); // Nutze SaveKey statt levelCompletionKey
-                PlayerPrefs.SetInt(SaveKey, value ? 1 : 0);
-                PlayerPrefs.Save();
+                SetLevelCompletionState(value);
             }
         }
+    }
+
+    private void SetLevelCompletionState(bool value) 
+    {
+        isLevelCompleted = value;
+        PlayerPrefs.SetInt(SaveKey, value ? 1 : 0);
+        PlayerPrefs.Save();
+        OnLevelCompletionChanged?.Invoke(isLevelCompleted);
     }
     
 
@@ -99,6 +115,18 @@ public class SceneProgressManager : MonoBehaviour
     }
 
     // Level-Abschluss überprüfen
+    private bool CheckCondition(LevelCondition condition, object value)
+    {
+        return condition.valueType switch
+        {
+            ConditionValueType.Boolean => value is bool val && val == condition.expectedBool,
+            ConditionValueType.Integer => value is int val && val == condition.expectedInt,
+            ConditionValueType.Float => value is float val && val == condition.expectedFloat,
+            ConditionValueType.String => value is string val && val == condition.expectedString,
+            _ => false
+        };
+    }
+
     public bool CheckLevelCompletion()
     {
         foreach (var condition in completionConditions)
@@ -110,35 +138,16 @@ public class SceneProgressManager : MonoBehaviour
                 return false;
             }
 
-            bool conditionMet = false;
-            var value = sceneValues[condition.key];
-
-            switch (condition.valueType)
-            {
-                case ConditionValueType.Boolean:
-                    conditionMet = value is bool && (bool)value == condition.expectedBool;
-                    break;
-                case ConditionValueType.Integer:
-                    conditionMet = value is int && (int)value == condition.expectedInt;
-                    break;
-                case ConditionValueType.Float:
-                    conditionMet = value is float && (float)value == condition.expectedFloat;
-                    break;
-                case ConditionValueType.String:
-                    conditionMet = value is string && (string)value == condition.expectedString;
-                    break;
-            }
-
-            if (!conditionMet)
+            if (!CheckCondition(condition, sceneValues[condition.key]))
             {
                 Debug.Log($"Bedingung nicht erfüllt für Key: {condition.key}");
+                IsLevelCompleted = false;
                 return false;
             }
         }
         
         Debug.Log("Alle Level-Bedingungen erfüllt!");
         IsLevelCompleted = true;
-
         return true;
     }
 
@@ -147,21 +156,40 @@ public class SceneProgressManager : MonoBehaviour
         IsLevelCompleted = completed;
     }
 
-    public void ResetLevel()
+    public void ResetProgress(bool resetAllLevels = false)
     {
+        if (resetAllLevels)
+        {
+            PlayerPrefs.DeleteAll();
+        }
+        else
+        {
+            PlayerPrefs.DeleteKey(SaveKey);
+        }
+        PlayerPrefs.Save();
         sceneValues.Clear();
-        IsLevelCompleted = false;
+        SetLevelCompletionState(false);
+        
+        if (resetAllLevels)
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        }
     }
 
     public static void ResetAllLevels()
     {
-    PlayerPrefs.DeleteAll();
-    PlayerPrefs.Save();
-    Debug.Log("Alle Level-Fortschritte wurden zurückgesetzt");
-    Scene currentScene = SceneManager.GetActiveScene();
-    SceneManager.LoadScene(currentScene.name);
+        if (Instance != null)
+        {
+            Instance.ResetProgress(true);
+        }
     }
 
-
+    void OnDestroy()
+    {
+    if (instance == this)
+        {
+        instance = null;
+        }
+    }
 
 }

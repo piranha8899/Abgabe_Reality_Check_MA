@@ -13,12 +13,34 @@ using UnityEngine.SceneManagement;
         public GameObject targetObject; // Das zu aktivierende GameObject
     }
 
+     [System.Serializable]
+    public class ProgressIndicator
+    {
+        public int requiredCompletions;
+        public GameObject[] indicatorObjects = new GameObject[3];
+        public void SetObjectsActive(bool state)
+        {
+            foreach (var obj in indicatorObjects)
+            {
+                if (obj != null)
+                {
+                    obj.SetActive(state);
+                }
+            }
+        }
+    }
+
+    //Aktivieren/Deaktivieren aller GameObjects
+    
+
     public LevelCompletionPair[] levelCompletionPairs;
+     public ProgressIndicator[] progressIndicators;
 
     void Start()
     {
         // Prüfe beim Start alle Level-Status
         CheckAllLevelStatus();
+        UpdateProgressIndicator();
     }
 
      void OnEnable()
@@ -48,6 +70,7 @@ using UnityEngine.SceneManagement;
      private void OnLevelStatusChanged(bool completed)
     {
         CheckAllLevelStatus();
+        UpdateProgressIndicator();
     }
 
     // Prüft den Status aller konfigurierten Level
@@ -72,6 +95,40 @@ using UnityEngine.SceneManagement;
             {
                 // Aktiviere/Deaktiviere das GameObject je nach Level-Status
                 pair.targetObject.SetActive(isCompleted);
+                break;
+            }
+        }
+    }
+
+     private int CountCompletedLevels()
+    {
+        int completedCount = 0;
+        foreach (var pair in levelCompletionPairs)
+        {
+            if (PlayerPrefs.GetInt($"Level_{pair.levelId}_Completed", 0) == 1)
+            {
+                completedCount++;
+            }
+        }
+        return completedCount;
+    }
+
+    private void UpdateProgressIndicator()
+    {
+        int completedLevels = CountCompletedLevels();
+        
+        // Deaktiviere zuerst alle Indikatoren
+        foreach (var indicator in progressIndicators)
+            {
+            indicator.SetObjectsActive(false);
+            }
+
+        // Aktiviere die passenden Indikatoren
+        foreach (var indicator in progressIndicators)
+        {
+            if (indicator.requiredCompletions == completedLevels)
+            {
+                indicator.SetObjectsActive(true);
                 break;
             }
         }
