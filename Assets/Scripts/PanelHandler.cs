@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 
-  public class SceneLoader : MonoBehaviour
+  public class PanelHandler : MonoBehaviour
 {
     [System.Serializable]
     public class LevelCompletionPair

@@ -6,60 +6,28 @@ using UnityEngine.UI;
 
 public class UIButtonHandler : MonoBehaviour
 {
-    public GameObject overlayImage;
-    public Button closeButton;
 
-
-    // Start is called before the first frame update
-    void Start()
+    
+    // Aufruf direkt über OnClick Methode auf dem Button
+    
+    // Zeigt ein GameObject an
+    public void ShowObject(GameObject obj)
     {
-        if (overlayImage != null)
-        {
-            overlayImage.SetActive(false);
-        }
-        
-        Button button = GetComponent<Button>();
-        if (button != null)
-        {
-            button.onClick.AddListener(ShowOverlay);
-        }
-
-        if (closeButton != null)
-        {
-            closeButton.onClick.AddListener(HideOverlay);
-        }
+        if (obj != null)
+            obj.SetActive(true);
     }
-   
-    void ShowOverlay()
+    
+    // Versteckt ein GameObject
+    public void HideObject(GameObject obj)
     {
-        //Debug.Log("Button clicked");
-        if (overlayImage != null)
-        {
-            //Debug.Log("Show overlay");
-            overlayImage.SetActive(true);
-        }
-        else
-        {
-            Debug.Log("Overlay ref not found");
-        }
-        
+        if (obj != null)
+            obj.SetActive(false);
     }
-    void HideOverlay()
+    
+    // Wechselt den Zustand eines GameObjects
+    public void ToggleObject(GameObject obj)
     {
-        overlayImage.SetActive(false);
-    }
-
-    void OnDestroy()
-    {
-        Button button = GetComponent<Button>();
-        if (button != null)
-        {
-            button.onClick.RemoveListener(ShowOverlay);
-        }
-        
-        if (closeButton != null)
-        {
-            closeButton.onClick.RemoveListener(HideOverlay);
-        }
+        if (obj != null)
+            obj.SetActive(!obj.activeSelf);
     }
 }

@@ -6,27 +6,22 @@ using UnityEngine.SceneManagement;
 public class SceneProgressManager : MonoBehaviour
 {
     private static SceneProgressManager instance;
-    public static SceneProgressManager Instance
+    //Instanz erstellen
+    public static SceneProgressManager Instance    
     {
         get
         {
-            if (instance == null)
-            {
-                instance = FindObjectOfType<SceneProgressManager>();
-                if (instance == null)
-                {
-                    GameObject go = new GameObject("SceneProgressManager");
-                    instance = go.AddComponent<SceneProgressManager>();
-                }
-            }
-            return instance;
+        if (instance == null)
+            instance = FindObjectOfType<SceneProgressManager>();
+        return instance;
         }
     }
+    private const string CURRENT_LEVEL_KEY = "CurrentLevelIdentifier";
     
     //Dictionary zum Speichern verschiedener Werte anlegen
     private Dictionary<string, object> sceneValues = new Dictionary<string, object>();
 
-    public enum ConditionValueType
+    public enum ConditionValueType //Kann im Inspector ausgewählt werden
     {
         Boolean,
         Integer,
@@ -51,17 +46,34 @@ public class SceneProgressManager : MonoBehaviour
 
     //Levelabschluss-Key
     [Header("Level Completion")]
-    public string levelIdentifier; // z.B. "Level1", "Tutorial" etc.
-    private string SaveKey => $"Level_{levelIdentifier}_Completed";
+    [SerializeField] private string levelIdentifier = ""; // z.B. "Level1", "Tutorial" etc.
+    private string SaveKey => !string.IsNullOrEmpty(LevelIdentifier) ? $"Level_{LevelIdentifier}_Completed" : "";
     private bool isLevelCompleted = false;
     public System.Action<bool> OnLevelCompletionChanged;
+
+    //Handelt den LevelIdentifier
+    public string LevelIdentifier 
+{
+    get { return levelIdentifier; }
+    set 
+    {
+        levelIdentifier = value;
+        // Bei Änderung global speichern
+        PlayerPrefs.SetString(CURRENT_LEVEL_KEY, levelIdentifier);
+        PlayerPrefs.Save();
+    }
+}
+    //Prüft, ob LevelIdentifier oder CompletionConditions gesetzt sind
+    private bool IsLevelTrackingEnabled => !string.IsNullOrEmpty(LevelIdentifier) && 
+                                    completionConditions != null && 
+                                    completionConditions.Length > 0;
 
     public bool IsLevelCompleted 
     { 
         get { return isLevelCompleted; }
         private set
         {
-            if (isLevelCompleted != value)
+            if (isLevelCompleted != value && IsLevelTrackingEnabled) //Status nur setzen, um Runtime Fehler zu vermeiden
             {
                 SetLevelCompletionState(value);
             }
@@ -70,32 +82,59 @@ public class SceneProgressManager : MonoBehaviour
 
     private void SetLevelCompletionState(bool value) 
     {
+        if(!IsLevelTrackingEnabled) return;
+
         isLevelCompleted = value;
-        PlayerPrefs.SetInt(SaveKey, value ? 1 : 0);
-        PlayerPrefs.Save();
+        
+        if (!string.IsNullOrEmpty(SaveKey))
+        {
+            PlayerPrefs.SetInt(SaveKey, value ? 1 : 0);
+            PlayerPrefs.Save();
+        }
+        
         OnLevelCompletionChanged?.Invoke(isLevelCompleted);
     }
     
 
     void Awake()
     {
-        if (instance == null)
-        {
-            instance = this;
-            isLevelCompleted = false;
-            OnLevelCompletionChanged?.Invoke(isLevelCompleted);
-        }
+    if (instance == null)
+     {
+        instance = this;
+        
+        // WICHTIG: LevelIdentifier aus PlayerPrefs wiederherstellen, falls gesetzt
+        if (string.IsNullOrEmpty(levelIdentifier))
+         {
+            levelIdentifier = PlayerPrefs.GetString(CURRENT_LEVEL_KEY, "");
+         }
+        else
+          {
+            // Aktuellen LevelIdentifier speichern
+            PlayerPrefs.SetString(CURRENT_LEVEL_KEY, levelIdentifier);
+            PlayerPrefs.Save();
+         }
+        
+        // Lade den gespeicherten Zustand, nur wenn Level-Tracking aktiviert ist
+        if (IsLevelTrackingEnabled && !string.IsNullOrEmpty(SaveKey))
+         {
+            isLevelCompleted = PlayerPrefs.GetInt(SaveKey, 0) == 1;
+          }
+    }   
         else if (instance != this)
         {
-            Destroy(gameObject);
+        Destroy(gameObject);
         }
     }
 
-    //Variablenwert speichern
+    //Variablenwert speichern, Schlüsselname wird definiert
     public void SetValue(string key, object value)
     {
-        sceneValues[key] = value;
-        Debug.Log($"Wert gespeichert - Key: {key}, Value: {value}");
+    if (string.IsNullOrEmpty(key)) return;
+    
+    sceneValues[key] = value;
+    
+    // Nur prüfen wenn Level-Tracking aktiv
+    if (IsLevelTrackingEnabled)
         CheckLevelCompletion();
     }
 
@@ -108,6 +147,7 @@ public class SceneProgressManager : MonoBehaviour
         }
         return defaultValue;
     }
+    //Prüft, ob ein entsprechender Schlüssel existiert
     public bool HasValue(string key)
     {
         return sceneValues.ContainsKey(key);
@@ -116,20 +156,60 @@ public class SceneProgressManager : MonoBehaviour
     // Level-Abschluss überprüfen
     private bool CheckCondition(LevelCondition condition, object value)
     {
-        return condition.valueType switch
+    if (condition == null || value == null) return false;
+    
+    try
         {
-            ConditionValueType.Boolean => value is bool val && val == condition.expectedBool,
-            ConditionValueType.Integer => value is int val && val == condition.expectedInt,
-            ConditionValueType.Float => value is float val && val == condition.expectedFloat,
-            ConditionValueType.String => value is string val && val == condition.expectedString,
-            _ => false
-        };
-    }
+        switch (condition.valueType)
+            {
+            case ConditionValueType.Boolean:
+                return (value is bool b) && b == condition.expectedBool;
+                
+            case ConditionValueType.Integer:
+                // Direkte Konvertierung für häufigste Fälle
+                return (value is int i) ? i == condition.expectedInt : 
+                       int.TryParse(value.ToString(), out int n) && n == condition.expectedInt;
+                
+            case ConditionValueType.Float:
+                // Vereinfachte Float-Prüfung
+                return (value is float f) ? Mathf.Approximately(f, condition.expectedFloat) : 
+                       float.TryParse(value.ToString(), out float p) && Mathf.Approximately(p, condition.expectedFloat);
+                
+            case ConditionValueType.String:
+                return value.ToString() == condition.expectedString;
+                
+            default:
+                return false;
+            }
+        }
+    catch { return false; }
+    } 
 
+    //Prüft alle definierten Bedingungen
     public bool CheckLevelCompletion()
     {
+        // Wenn Level-Tracking nicht aktiviert ist, passiert nichts
+        if (!IsLevelTrackingEnabled)
+        {
+            return false;
+        }
+        
+        // Sind keine Bedingungen definiert, wird false zurückgegeben
+        if (completionConditions == null || completionConditions.Length == 0)
+        {
+            Debug.Log("Keine Level-Bedingungen definiert");
+            IsLevelCompleted = false;
+            return false;
+        }
+
         foreach (var condition in completionConditions)
         {
+            // Überspringe null-Bedingungen
+            if (condition == null || string.IsNullOrEmpty(condition.key))
+            {
+                continue;
+            }
+            
             if (!sceneValues.ContainsKey(condition.key))
             {
                 Debug.Log($"Fehlender Wert für Key: {condition.key}");
@@ -150,39 +230,91 @@ public class SceneProgressManager : MonoBehaviour
         return true;
     }
 
+    //Setzt Completion manuell, wenn Bedingungen erfüllt
     public void SetLevelCompleted(bool completed)
     {
-        IsLevelCompleted = completed;
+        if (IsLevelTrackingEnabled)
+        {
+            IsLevelCompleted = completed;
+        }
     }
 
-    public void ResetProgress(bool resetAllLevels = false)
+    public static string GetCurrentLevelIdentifier()
     {
-        if (resetAllLevels)
-        {
-            PlayerPrefs.DeleteAll();
-        }
-        else
-        {
-            PlayerPrefs.DeleteKey(SaveKey);
-        }
+    return PlayerPrefs.GetString(CURRENT_LEVEL_KEY, "");
+    }
+
+    public static void SetCurrentLevelIdentifier(string identifier)
+    {
+        PlayerPrefs.SetString(CURRENT_LEVEL_KEY, identifier);
         PlayerPrefs.Save();
-        sceneValues.Clear();
-        SetLevelCompletionState(false);
-        
-        if (resetAllLevels)
-        {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-        }
-    }
-
-    public static void ResetAllLevels()
-    {
+    
+        // Falls eine Instanz existiert, aktualisiere auch dort
         if (Instance != null)
         {
-            Instance.ResetProgress(true);
+        Instance.levelIdentifier = identifier;
         }
     }
 
+    // Aktuelle Szene zurücksetzen (nur aktuelles Level)
+    public void ResetCurrentScene()
+    {
+    // Variablen zurücksetzen
+    sceneValues.Clear();
+    isLevelCompleted = false;
+    
+    // Levelfortschritt löschen
+    if (!string.IsNullOrEmpty(SaveKey))
+     {
+        PlayerPrefs.DeleteKey(SaveKey);
+        PlayerPrefs.Save();
+     }
+    
+    // Event auslösen
+    OnLevelCompletionChanged?.Invoke(isLevelCompleted);
+    SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
+    // Alle Szenen zurücksetzen (kompletter Reset)
+    public void ResetAllScenes()
+    {
+    // Variablen zurücksetzen
+    sceneValues.Clear();
+    isLevelCompleted = false;
+    
+    // Alle Fortschritte löschen
+    PlayerPrefs.DeleteAll();
+    PlayerPrefs.Save();
+    
+    // Event auslösen
+    OnLevelCompletionChanged?.Invoke(isLevelCompleted);
+    
+    // Aktuelle Szene neu laden
+    SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
+    // Statische Hilfsmethoden, können von überall mittel SceneProgressManager.ResetCurrentSceneStatic() aufgerufen werden
+    public static void ResetCurrentSceneStatic()
+    {
+    if (Instance != null)
+     {
+        Instance.ResetCurrentScene();
+        Debug.Log("Aktuelle Szene zurückgesetzt");
+     }
+    }
+
+    public static void ResetAllScenesStatic()
+    {
+    if (Instance != null)
+     {
+        Instance.ResetAllScenes();
+        Debug.Log("Alle Szenen zurückgesetzt");
+     }
+    }
+
+
+
+    //Objekt zerstören
     void OnDestroy()
     {
     if (instance == this)
