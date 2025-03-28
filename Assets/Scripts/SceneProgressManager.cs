@@ -82,11 +82,10 @@ public class SceneProgressManager : MonoBehaviour
         if (instance == null)
         {
             instance = this;
-            // Lade den gespeicherten Zustand
-            isLevelCompleted = PlayerPrefs.GetInt(SaveKey, 0) == 1;
-            SetValue(SaveKey, isLevelCompleted);
+            isLevelCompleted = false;
+            OnLevelCompletionChanged?.Invoke(isLevelCompleted);
         }
-        else
+        else if (instance != this)
         {
             Destroy(gameObject);
         }
