@@ -6,6 +6,17 @@ using UnityEngine.SceneManagement;
 
   public class PanelHandler : MonoBehaviour
 {
+    private static PanelHandler instance;
+    public static PanelHandler Instance    
+    {
+        get
+        {
+        if (instance == null)
+            instance = FindObjectOfType<PanelHandler>();
+        return instance;
+        }
+    }
+
     [System.Serializable]
     public class LevelCompletionPair
     {
@@ -133,4 +144,40 @@ using UnityEngine.SceneManagement;
             }
         }
     }
+
+
+    // Alle Szenen zurücksetzen (kompletter Reset)
+    public void ResetAllScenes()
+    {
+
+    foreach (var pair in levelCompletionPairs)
+    {
+        if (!string.IsNullOrEmpty(pair.levelId))
+        {
+            string keyToDelete = $"Level_{pair.levelId}_Completed";
+            PlayerPrefs.DeleteKey(keyToDelete);
+            Debug.Log($"Level-Fortschritt gelöscht: {keyToDelete}");
+        }
+    }
+    
+    PlayerPrefs.Save();
+
+    // Aktualisiere die Anzeigen
+        CheckAllLevelStatus();
+        UpdateProgressIndicator();
+        
+    // Aktuelle Szene neu laden
+    SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
+    public static void ResetAllScenesStatic()
+    {
+    if (Instance != null)
+     {
+        Instance.ResetAllScenes();
+        Debug.Log("Alle Szenen zurückgesetzt");
+     }
+    }
+
+
 }

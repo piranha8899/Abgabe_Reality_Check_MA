@@ -275,24 +275,6 @@ public class SceneProgressManager : MonoBehaviour
     SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
-    // Alle Szenen zurücksetzen (kompletter Reset)
-    public void ResetAllScenes()
-    {
-    // Variablen zurücksetzen
-    sceneValues.Clear();
-    isLevelCompleted = false;
-    
-    // Alle Fortschritte löschen
-    PlayerPrefs.DeleteAll();
-    PlayerPrefs.Save();
-    
-    // Event auslösen
-    OnLevelCompletionChanged?.Invoke(isLevelCompleted);
-    
-    // Aktuelle Szene neu laden
-    SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-    }
-
     // Statische Hilfsmethoden, können von überall mittel SceneProgressManager.ResetCurrentSceneStatic() aufgerufen werden
     public static void ResetCurrentSceneStatic()
     {
@@ -302,17 +284,6 @@ public class SceneProgressManager : MonoBehaviour
         Debug.Log("Aktuelle Szene zurückgesetzt");
      }
     }
-
-    public static void ResetAllScenesStatic()
-    {
-    if (Instance != null)
-     {
-        Instance.ResetAllScenes();
-        Debug.Log("Alle Szenen zurückgesetzt");
-     }
-    }
-
-
 
     //Objekt zerstören
     void OnDestroy()
