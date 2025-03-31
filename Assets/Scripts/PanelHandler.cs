@@ -2,9 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 
-  public class PanelHandler : MonoBehaviour
+public class PanelHandler : MonoBehaviour
 {
     private static PanelHandler instance;
     public static PanelHandler Instance    
@@ -24,7 +25,7 @@ using UnityEngine.SceneManagement;
         public GameObject targetObject; // Das zu aktivierende GameObject
     }
 
-     [System.Serializable]
+    [System.Serializable]
     public class ProgressIndicator
     {
         public int requiredCompletions;
@@ -40,19 +41,25 @@ using UnityEngine.SceneManagement;
             }
         }
     }
-
-    //Aktivieren/Deaktivieren aller GameObjects
     
 
     public LevelCompletionPair[] levelCompletionPairs;
-     public ProgressIndicator[] progressIndicators;
+    public ProgressIndicator[] progressIndicators;
+    public GameObject CompletionOverlay;
+    public GameObject PanelContinueButton;
 
     void Start()
     {
         // Prüfe beim Start alle Level-Status
         CheckAllLevelStatus();
         UpdateProgressIndicator();
+        CompletionOverlay.SetActive(false);
+        PanelContinueButton.SetActive(false);
+        CheckTotalCompletion();
+        
     }
+
+
 
      void OnEnable()
     {
@@ -82,6 +89,7 @@ using UnityEngine.SceneManagement;
     {
         CheckAllLevelStatus();
         UpdateProgressIndicator();
+        CheckTotalCompletion();
     }
 
     // Prüft den Status aller konfigurierten Level
@@ -142,6 +150,24 @@ using UnityEngine.SceneManagement;
                 indicator.SetObjectsActive(true);
                 break;
             }
+        }
+    }
+
+    //Totale Level Completion prüfen
+    private void CheckTotalCompletion()
+    {
+        int completedCount = CountCompletedLevels();
+        int requiredCompletions = levelCompletionPairs.Length; // Anzahl der Level
+        if (completedCount >= requiredCompletions)
+        {
+            CompletionOverlay.SetActive(true);
+            Debug.Log("Alle Level abgeschlossen!");
+            PanelContinueButton.SetActive(true);
+        }
+        else
+        {
+           Debug.Log($"Fortschritt: {completedCount} Level abgeschlossen.");
+           Debug.Log($"Noch {requiredCompletions - completedCount} Level zu absolvieren.");            
         }
     }
 
