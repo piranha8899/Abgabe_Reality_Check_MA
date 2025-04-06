@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-public class UIButton : MonoBehaviour
+public class UINumberController : MonoBehaviour
 {
     public string progressKey;
 

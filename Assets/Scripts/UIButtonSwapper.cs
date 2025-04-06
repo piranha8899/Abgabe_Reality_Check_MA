@@ -1,73 +1,107 @@
+using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+[Serializable]
+public class ButtonPair
+{
+    public Button onButton;
+    public Button offButton;
+    public bool startWithOnButton = false;
+}
+
 public class UIButtonSwapper : MonoBehaviour
 {
+    [SerializeField] private List<ButtonPair> buttonPairs = new List<ButtonPair>();
     
-    public Button firstButton;
-        
-    public Button secondButton;
-
-    public string progressKey; //Key, der dann über SceneProgressManager aufgerufen wird
-    public bool startWithSecondButton = false; //Wenn false, wird mit First Button gestartet
+    [SerializeField] private Button completionTargetButton; // Button, der den Level-Fortschritt bestimmt
+    
+    [SerializeField] private string levelCompletionKey = "LevelCompleted";
 
     void Start()
     {
-        // Prüfe ob beide Buttons zugewiesen sind
-        if (string.IsNullOrEmpty(progressKey))
+        // Initialer Zustand für alle Button-Paare
+        for (int i = 0; i < buttonPairs.Count; i++)
         {
-            Debug.LogError("Progress Key nicht gesetzt!");
-            return;
-        }
-
-        // Prüfe ob gespeicherter Zustand existiert
-        bool hasStoredState = SceneProgressManager.Instance.HasValue(progressKey);
-        
-        // Setze initialen Zustand
-        bool isSecondActive;
-        if (hasStoredState)
-        {
-            // Nutze gespeicherten Zustand
-            isSecondActive = SceneProgressManager.Instance.GetValue(progressKey, false);
-        }
-        else
-        {
+            var pair = buttonPairs[i];
+            
             // Nutze konfigurierten Startzustand
-            isSecondActive = startWithSecondButton;
-            SceneProgressManager.Instance.SetValue(progressKey, isSecondActive);
+            bool isOnActive = pair.startWithOnButton;
+
+            // Aktiviere entsprechenden Button
+            pair.onButton.gameObject.SetActive(isOnActive);
+            pair.offButton.gameObject.SetActive(!isOnActive);
+
+            // Click Events registrieren
+            int pairIndex = i;
+            pair.onButton.onClick.AddListener(() => SwapToOff(pairIndex));
+            pair.offButton.onClick.AddListener(() => SwapToOn(pairIndex));
         }
-        // Aktiviere entsprechenden Button
-        firstButton.gameObject.SetActive(!isSecondActive);
-        secondButton.gameObject.SetActive(isSecondActive);
-
-        // Click Events registrieren
-        firstButton.onClick.AddListener(SwapToSecond);
-        secondButton.onClick.AddListener(SwapToFirst);
+        
+        // Level-Status prüfen
+        CheckLevelCompletion();
     }
 
-    void SwapToSecond()
+    void SwapToOn(int pairIndex)
     {
-        firstButton.gameObject.SetActive(false);
-        secondButton.gameObject.SetActive(true);
-        //In Progress Manager schreiben, dass Key true ist
-        SceneProgressManager.Instance.SetValue(progressKey, true);
+        if (pairIndex < 0 || pairIndex >= buttonPairs.Count)
+            return;
+
+        // Zuerst alle Paare auf "off" setzen
+        for (int i = 0; i < buttonPairs.Count; i++)
+        {
+            buttonPairs[i].onButton.gameObject.SetActive(false);
+            buttonPairs[i].offButton.gameObject.SetActive(true);
+        }
+        
+        // Dann das ausgewählte Paar auf on setzen
+        var pair = buttonPairs[pairIndex];
+        pair.onButton.gameObject.SetActive(true);
+        pair.offButton.gameObject.SetActive(false);
+        
+        // Level-Status prüfen
+        CheckLevelCompletion();
     }
 
-    void SwapToFirst()
+    void SwapToOff(int pairIndex)
     {
-        secondButton.gameObject.SetActive(false);
-        firstButton.gameObject.SetActive(true);
-        //In Progress Manager schreiben, dass Key false ist
-        SceneProgressManager.Instance.SetValue(progressKey, false);
+        if (pairIndex < 0 || pairIndex >= buttonPairs.Count)
+            return;
+
+        var pair = buttonPairs[pairIndex];
+        pair.onButton.gameObject.SetActive(false);
+        pair.offButton.gameObject.SetActive(true);
+        
+        // Level-Status prüfen
+        CheckLevelCompletion();
+    }
+    
+    private void CheckLevelCompletion()
+    {
+        if (completionTargetButton == null)
+            return;
+            
+        // Prüfen ob der Ziel-Button aktiv ist
+        bool isCompleted = completionTargetButton.gameObject.activeSelf;
+        
+        // Level-Fortschritt speichern
+        SceneProgressManager.Instance.SetValue(levelCompletionKey, isCompleted);
     }
 
     void OnDestroy()
     {
         // Events wieder entfernen
-        if (firstButton != null)
-            firstButton.onClick.RemoveListener(SwapToSecond);
-        
-        if (secondButton != null)
-            secondButton.onClick.RemoveListener(SwapToFirst);
+        for (int i = 0; i < buttonPairs.Count; i++)
+        {
+            var pair = buttonPairs[i];
+            int pairIndex = i;
+            
+            if (pair.onButton != null)
+                pair.onButton.onClick.RemoveListener(() => SwapToOff(pairIndex));
+            
+            if (pair.offButton != null)
+                pair.offButton.onClick.RemoveListener(() => SwapToOn(pairIndex));
+        }
     }
 }
