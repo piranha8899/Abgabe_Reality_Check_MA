@@ -32,7 +32,7 @@ public class CloseCompleteButton : MonoBehaviour
 
     public void CloseOverlayAndLoadScene()
     {
-        if (overlayToClose != null)
+        if (overlayToClose != null && !string.IsNullOrEmpty(scenetoLoad))
         {
             overlayToClose.SetActive(false);
             SceneManager.LoadScene(scenetoLoad);

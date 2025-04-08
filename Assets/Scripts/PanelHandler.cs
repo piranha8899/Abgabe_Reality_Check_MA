@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Build;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -53,8 +54,14 @@ public class PanelHandler : MonoBehaviour
         // Prüfe beim Start alle Level-Status
         CheckAllLevelStatus();
         UpdateProgressIndicator();
-        CompletionOverlay.SetActive(false);
-        PanelContinueButton.SetActive(false);
+        if (CompletionOverlay != null)
+        {
+            CompletionOverlay.SetActive(false);
+        }
+        if( PanelContinueButton != null)
+        {
+            PanelContinueButton.SetActive(false);
+        }
         CheckTotalCompletion();
         
     }
