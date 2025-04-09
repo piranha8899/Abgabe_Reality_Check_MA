@@ -281,10 +281,10 @@ public class SceneProgressManager : MonoBehaviour
     
     // Levelfortschritt löschen
     if (!string.IsNullOrEmpty(SaveKey))
-     {
+        {
         PlayerPrefs.DeleteKey(SaveKey);
         PlayerPrefs.Save();
-     }
+        }
     
     // Event auslösen
     OnLevelCompletionChanged?.Invoke(isLevelCompleted);

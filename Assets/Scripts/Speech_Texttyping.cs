@@ -16,6 +16,8 @@ public class Speech_Texttyping : MonoBehaviour
     public GameObject continueButton;
     public GameObject[] additionalObjectsToShow; //Alle UI-Elemente, die angezeigt werden sollen
     public bool startAutomatically = true; //Automatischer Start?
+    public bool playOnlyOnce = false; //Nur einmal abspielen?
+    public string playedPrefKey = "";  // Wenn leer, wird typerId verwendet
     public float startDelay = 0.5f;
     private int currentLine = 0;
     private bool isTyping = false;
@@ -75,6 +77,12 @@ public class Speech_Texttyping : MonoBehaviour
     // Starten des Typers von anderen Skripts
     public void BeginTypingSequence()
     {
+        if(playOnlyOnce && HasAlreadyPlayed())
+        {
+            Debug.Log($"Dialog {typerId} wurde gespielt und play only once ist gesetzt. ");
+            return;
+        }
+        
         if (!hasStarted)
         {
             hasStarted = true;
@@ -146,9 +154,40 @@ public class Speech_Texttyping : MonoBehaviour
     // Beendet den Typing-Prozess
     private void FinishTyping()
     { 
+        if (playOnlyOnce)
+        {
+        MarkAsPlayed();
+        }
         // Button einblenden
         if (continueButton != null)
             continueButton.SetActive(true);
+    }
+
+    
+
+    //Prüfen, ob Dialog schon gespielt wurde
+    private bool HasAlreadyPlayed()
+    {
+    string speechkey = GetPrefKey();
+    return PlayerPrefs.GetInt(speechkey, 0) == 1;
+    }
+
+    // Markiert dialog als abgespielt
+    private void MarkAsPlayed()
+    {
+    string speechkey = GetPrefKey();
+    PlayerPrefs.SetInt(speechkey, 1);
+    PlayerPrefs.Save();
+    Debug.Log($"Dialog '{typerId}' als abgespielt markiert: {speechkey}");
+    }
+
+    // Bestimme den zu verwendenden PlayerPrefs-Key
+    private string GetPrefKey()
+    {
+    if (!string.IsNullOrEmpty(playedPrefKey))
+        return playedPrefKey;
+    
+    return $"Typer_{typerId}_Played";
     }
     
     // Sofortiges Anzeigen des kompletten Texts (beim Klick)

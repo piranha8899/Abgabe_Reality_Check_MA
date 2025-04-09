@@ -58,8 +58,6 @@ public class GoalSaver : MonoBehaviour
             }
         }
     }
-
-    // Richtet alle Button-Listener ein
     // Richtet alle Button-Listener ein
     private void SetupButtons()
     {
@@ -122,8 +120,7 @@ public class GoalSaver : MonoBehaviour
         
         // Prüfen, ob Toggles ausgewählt sind und anzeigen
         bool anyToggleSelected = CreateToggleList();
-        
-        // Fallback anzeigen, falls nichts ausgewählt wurde
+
         // Fallback anzeigen, falls nichts ausgewählt wurde
         if (!anyToggleSelected)
         {
@@ -132,12 +129,12 @@ public class GoalSaver : MonoBehaviour
             {
                 goalFallback.SetActive(true);
                 
-                // Fallback zum Container hinzufügen, falls noch nicht erfolgt
+                // Fallback zum Container hinzufügen
                 if (goalFallback.transform.parent != listContainer)
                     goalFallback.transform.SetParent(listContainer, false);
             }
             
-            // Unabhängigen Fallback-Button anzeigen
+            //Fallback-Button anzeigen
             if (fallbackBackButton != null)
                 fallbackBackButton.gameObject.SetActive(true);
         }
