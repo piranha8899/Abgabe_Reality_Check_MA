@@ -1,35 +1,63 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using TMPro;
 using UnityEngine.UI;
+using TMPro;
 
-public class SimpleTextTyper : MonoBehaviour
+public class Speech_Texttyping : MonoBehaviour
 {
 
+    public string typerId = ""; //ID für externe Aufrufe
     public TextMeshProUGUI textDisplay;
     public List<string> textLines;
     public float typingSpeed = 0.05f;
     public List<AudioClip> audioClips;
     private AudioSource audioSource;
     public GameObject continueButton;
-    public GameObject textContainer;
-    public GameObject[] additionalObjectsToShow;
-    public bool startAutomatically = true;
+    public GameObject[] additionalObjectsToShow; //Alle UI-Elemente, die angezeigt werden sollen
+    public bool startAutomatically = true; //Automatischer Start?
     public float startDelay = 0.5f;
     private int currentLine = 0;
     private bool isTyping = false;
     private bool hasStarted = false;
 
+    // Statischer Dictionary für alle Typer (Liste)
+    private static Dictionary<string, Speech_Texttyping> allTypers = new Dictionary<string, Speech_Texttyping>();
+
     void Awake()
     {
-        gameObject.SetActive(true);
+        // Im Dictionary registrieren
+        if (!string.IsNullOrEmpty(typerId))
+        {
+            allTypers[typerId] = this;
+        }
+
+        // Deaktivieren, wenn nicht automatisch gestartet
+        if (!startAutomatically)
+            gameObject.SetActive(false);
+
         audioSource = GetComponent<AudioSource>();
         if (audioSource == null)
             audioSource = gameObject.AddComponent<AudioSource>();
     }
 
+        void OnDestroy()
+    {
+        // Aus Dictionary entfernen
+        if (!string.IsNullOrEmpty(typerId) && allTypers.ContainsKey(typerId))
+            allTypers.Remove(typerId);
+    }
+
     void Start()
+    {
+        // UI initialisieren
+        HideUIElements();
+        if (startAutomatically)
+            BeginTypingSequence();
+    }
+
+    // UI-Elemente ausblenden
+    private void HideUIElements()
     {
         if (continueButton != null)
             continueButton.SetActive(false);
@@ -42,15 +70,9 @@ public class SimpleTextTyper : MonoBehaviour
         
         if (textDisplay != null)
             textDisplay.text = "";
-        
-        // Automatischer Start falls gewünscht
-        if (startAutomatically)
-        {
-            BeginTypingSequence();
-        }
     }
     
-    // Öffentliche Methode zum Starten des Typers von anderen Skripts
+    // Starten des Typers von anderen Skripts
     public void BeginTypingSequence()
     {
         if (!hasStarted)
@@ -60,7 +82,7 @@ public class SimpleTextTyper : MonoBehaviour
         }
     }
     
-    // Ablaufsequenz für Starten
+    //Starten der Sequenz
     private IEnumerator BeginSequence()
     {
         // Verzögerung
@@ -73,14 +95,12 @@ public class SimpleTextTyper : MonoBehaviour
                 obj.SetActive(true);
         }
         
-        yield return new WaitForSeconds(0.5f); // Kurze Pause
-            
-        // Starte Textanimation
+        yield return new WaitForSeconds(0.5f);
         StartTyping();
     }
     
-    // Startet die Textanimation für die aktuelle Zeile
-    public void StartTyping()
+    // Startet die Textanimation
+    private void StartTyping()
     {
         if (currentLine < textLines.Count)
         {
@@ -139,7 +159,6 @@ public class SimpleTextTyper : MonoBehaviour
             StopAllCoroutines();
             isTyping = false;
             textDisplay.text = textLines[currentLine];
-
             
             // Warten auf erneuten Klick für nächste Zeile
             StartCoroutine(WaitForNextLine());
@@ -155,12 +174,6 @@ public class SimpleTextTyper : MonoBehaviour
         StartTyping();
     }
     
-    // Geschwindigkeit während der Laufzeit ändern
-    public void SetTypingSpeed(float speed)
-    {
-        typingSpeed = speed;
-    }
-    
     // Zurücksetzen der Sequenz (für erneute Verwendung)
     public void ResetTyper()
     {
@@ -168,18 +181,31 @@ public class SimpleTextTyper : MonoBehaviour
         currentLine = 0;
         hasStarted = false;
         isTyping = false;
+        HideUIElements(); //Alle Elemente ausblenden
         
-        if (textDisplay != null)
-            textDisplay.text = "";
-        
-        if (continueButton != null)
-            continueButton.SetActive(false);
-        
-        // Zusätzliche Objekte ausblenden
-        foreach (GameObject obj in additionalObjectsToShow)
+    }
+
+    //STATICS für externen Zugriff
+
+    //Dialog via ID Starten
+    public static void StartDialog(string id)
+    {
+        if (allTypers.ContainsKey(id))
         {
-            if (obj != null)
-                obj.SetActive(false);
+            Speech_Texttyping typer = allTypers[id];
+            typer.gameObject.SetActive(true); //Aktivieren
+            typer.ResetTyper(); //Zurücksetzen
+            typer.BeginTypingSequence(); //Starten
         }
+        else
+        {
+            Debug.LogWarning("Typer mit ID " + id + " nicht gefunden.");
+        }
+    }
+
+    // Prüfen ob Dialog existiert
+    public static bool HasDialog(string id)
+    {
+        return allTypers.ContainsKey(id);
     }
 }

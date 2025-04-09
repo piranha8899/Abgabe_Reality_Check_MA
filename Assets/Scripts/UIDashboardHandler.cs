@@ -36,8 +36,6 @@ public class UIDashboardHandler : MonoBehaviour
         {
             nextButton.onClick.AddListener(HideOverlay);
         }
-       
-        
     }
 
     void HandleLevelCompletion(bool isCompleted)
@@ -51,9 +49,9 @@ public class UIDashboardHandler : MonoBehaviour
     void CheckStatus()
     {
     if (SceneProgressManager.Instance.IsLevelCompleted)
-    {
-        // Level ist abgeschlossen
-    }
+        {
+        //Code für Abschlusscheck möglich
+        }
     }
 
     void OnDestroy()

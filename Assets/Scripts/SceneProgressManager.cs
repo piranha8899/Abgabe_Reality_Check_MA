@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class SceneProgressManager : MonoBehaviour
 {
@@ -17,6 +18,8 @@ public class SceneProgressManager : MonoBehaviour
         }
     }
     private const string CURRENT_LEVEL_KEY = "CurrentLevelIdentifier";
+
+    [SerializeField] private Button directCompleteButton; // Button für den direkten Levelabschluss (NUR FÜR TESTING)
     
     //Dictionary zum Speichern verschiedener Werte anlegen
     private Dictionary<string, object> sceneValues = new Dictionary<string, object>();
@@ -124,6 +127,18 @@ public class SceneProgressManager : MonoBehaviour
         {
         Destroy(gameObject);
         }
+    }
+
+    void Start()
+    { //Level Direkt abschliessen (NUR FÜR TESTING)
+     if (directCompleteButton != null)
+    {
+        directCompleteButton.onClick.AddListener(() => {
+            // Setzt isLevelCompleted direkt auf true
+            SetLevelCompleted(true);
+            Debug.Log("Level wurde manuell abgeschlossen (Test-Button)");
+        });
+    }   
     }
 
     //Variablenwert speichern, Schlüsselname wird definiert
@@ -255,6 +270,7 @@ public class SceneProgressManager : MonoBehaviour
         Instance.levelIdentifier = identifier;
         }
     }
+
 
     // Aktuelle Szene zurücksetzen (nur aktuelles Level)
     public void ResetCurrentScene()
