@@ -18,10 +18,12 @@ public class PanelHandler : MonoBehaviour
         }
     }
 
-    public string introTyperId = "xy"; // ID wie aus Typer festlegen
+    void Awake()
+    {
+        DontDestroyOnLoad(gameObject); //Panel Handler über alle Szenen hinweg erhalten
+    }
+
     public string completionTyperId = "yz"; // ID wie aus Typer festlegen
-    private bool introPlayed = false;
-    private bool completionPlayed = false;
 
     [System.Serializable]
     public class LevelCompletionPair
@@ -172,9 +174,9 @@ public class PanelHandler : MonoBehaviour
         int requiredCompletions = levelCompletionPairs.Length; // Anzahl der Level
         if (completedCount >= requiredCompletions)
         {
-            CompletionOverlay.SetActive(true);
+            if(CompletionOverlay != null) CompletionOverlay.SetActive(true);
             Debug.Log("Alle Level abgeschlossen!");
-            PanelContinueButton.SetActive(true);
+            if(PanelContinueButton != null) PanelContinueButton.SetActive(true);
         }
         else
         {
@@ -189,26 +191,9 @@ public class PanelHandler : MonoBehaviour
         yield return new WaitForSeconds(0.2f); //Warten, bis alles geladen ist
         int completedCount = CountCompletedLevels();
 
-        //Prüfen, ob Intro gespielt werden soll
-        if (completedCount == 0 && !introPlayed)
-        {
-            introPlayed = true;
-            if(Speech_Texttyping.HasDialog(introTyperId))
-            {
-                Debug.Log($"Typing-ID {introTyperId} wird abgespielt.");
-                Speech_Texttyping.StartDialog(introTyperId);
-            }
-            else
-            {
-                Debug.Log($"Typing-ID {introTyperId} nicht gefunden.");
-
-            }
-        }
-
         //Prüfen, ob Completion-Sequenz gespielt werden soll
-        if (completedCount >= levelCompletionPairs.Length && !completionPlayed)
+        if (completedCount >= levelCompletionPairs.Length && !PlayerPrefs.HasKey($"Typer_{completionTyperId}_Played"))
         {
-            completionPlayed = true;
             if(Speech_Texttyping.HasDialog(completionTyperId))
             {
                 Debug.Log($"Typing-ID {completionTyperId} wird abgespielt.");
@@ -235,13 +220,24 @@ public class PanelHandler : MonoBehaviour
             Debug.Log($"Level-Fortschritt gelöscht: {keyToDelete}");
             }
         }
+
+        //Typer-IDs zurücksetzen
+        for (int i = 1; i <= 30; i++)
+        {
+            string keyToDelete = $"Typer_{i}_Played";
+            if(PlayerPrefs.HasKey(keyToDelete))
+            {
+                PlayerPrefs.DeleteKey(keyToDelete);
+                Debug.Log($"Typer-Fortschritt gelöscht: {keyToDelete}");
+            }
+        }
+
+
         PlayerPrefs.Save();
         // Aktualisiere die Anzeigen
         CheckAllLevelStatus();
         UpdateProgressIndicator();
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-        introPlayed = false; //Intro zurücksetzen
-        completionPlayed = false; //Completion zurücksetzen
     }
 
     public static void ResetAllScenesStatic()

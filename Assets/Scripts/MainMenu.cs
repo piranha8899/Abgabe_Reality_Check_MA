@@ -14,8 +14,12 @@ public class MainMenu : MonoBehaviour
     [SerializeField] private Button settingsCloseButton;
     [SerializeField] private Button goalsButton;
     [SerializeField] private Button quitButton;
+    [SerializeField] private Button resetScenesButton;
+    [SerializeField] private Button resetAllPrefsButton;
     [SerializeField] private GameObject settingsPanel;
     [SerializeField] private string gameSceneName = "GameScene";
+    [SerializeField] private string[] levelIds; // Liste aller möglichen Level-IDs, um LevelCompletion zu prüfen
+
 
     private void Awake()
     {
@@ -41,7 +45,11 @@ public class MainMenu : MonoBehaviour
             settingsButton.onClick.AddListener(OpenSettings);
             
         if (goalsButton != null)
+        {
             goalsButton.onClick.AddListener(OpenGoals);
+            bool anyLevelCompleted = CheckIfAnyLevelCompleted();
+            goalsButton.interactable = anyLevelCompleted; // Button nur aktivieren, wenn mindestens ein Level abgeschlossen ist
+        }
             
         if (quitButton != null)
             quitButton.onClick.AddListener(QuitGame);
@@ -62,6 +70,8 @@ public class MainMenu : MonoBehaviour
         Debug.Log("Einstellungen werden geöffnet...");
         settingsPanel.SetActive(true);
         settingsCloseButton.onClick.AddListener(CloseSettings);
+        resetScenesButton.onClick.AddListener(ResetAllScenes);
+        resetAllPrefsButton.onClick.AddListener(ResetAllPrefs);
     }
 
     public void CloseSettings()
@@ -91,6 +101,52 @@ public class MainMenu : MonoBehaviour
     public void BackToMainMenu()
     {
         SceneManager.LoadScene("MainMenu");
+    }
+
+    private bool CheckIfAnyLevelCompleted()
+    {
+        foreach (string levelId in levelIds)
+        {
+            if (PlayerPrefs.GetInt($"Level_{levelId}_Completed", 0) == 1) // Überprüfe, ob das Level abgeschlossen ist
+            {
+                return true; // Mindestens ein Level ist abgeschlossen
+            }
+        }
+        return false; // Kein Level ist abgeschlossen
+    }
+
+    public void ResetAllScenes()
+    {
+        // Lösche alle Level-Completion-Keys
+        foreach (string levelId in levelIds)
+        {
+            if (!string.IsNullOrEmpty(levelId))
+            {
+                string keyToDelete = $"Level_{levelId}_Completed";
+                PlayerPrefs.DeleteKey(keyToDelete);
+                Debug.Log($"Level-Fortschritt gelöscht: {keyToDelete}");
+            }
+        }
+
+        // Lösche alle Typer-Keys (IDs von 1-30)
+        for (int i = 1; i <= 30; i++)
+        {
+            string keyToDelete = $"Typer_{i}_Played";
+            if (PlayerPrefs.HasKey(keyToDelete))
+            {
+                PlayerPrefs.DeleteKey(keyToDelete);
+                Debug.Log($"Typer-Fortschritt gelöscht: {keyToDelete}");
+            }
+        }
+        PlayerPrefs.Save();
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name); // Lade die aktuelle Szene neu
+    }
+
+    public void ResetAllPrefs()
+    {
+        PlayerPrefs.DeleteAll();
+        Debug.Log("Alle Einstellungen wurden zurückgesetzt.");
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name); // Lade die aktuelle Szene neu
     }
 
 

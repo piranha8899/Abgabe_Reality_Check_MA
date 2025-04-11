@@ -7,7 +7,9 @@ using TMPro;
 public class Speech_Texttyping : MonoBehaviour
 {
 
-    public string typerId = ""; //ID für externe Aufrufe
+    [Tooltip("ID für externe Aufrufe (gültige Werte: 1-30)")]
+    public string typerId = "";
+    
     public TextMeshProUGUI textDisplay;
     public List<string> textLines;
     public float typingSpeed = 0.05f;
@@ -17,7 +19,6 @@ public class Speech_Texttyping : MonoBehaviour
     public GameObject[] additionalObjectsToShow; //Alle UI-Elemente, die angezeigt werden sollen
     public bool startAutomatically = true; //Automatischer Start?
     public bool playOnlyOnce = false; //Nur einmal abspielen?
-    public string playedPrefKey = "";  // Wenn leer, wird typerId verwendet
     public float startDelay = 0.5f;
     private int currentLine = 0;
     private bool isTyping = false;
@@ -184,10 +185,7 @@ public class Speech_Texttyping : MonoBehaviour
     // Bestimme den zu verwendenden PlayerPrefs-Key
     private string GetPrefKey()
     {
-    if (!string.IsNullOrEmpty(playedPrefKey))
-        return playedPrefKey;
-    
-    return $"Typer_{typerId}_Played";
+        return $"Typer_{typerId}_Played";
     }
     
     // Sofortiges Anzeigen des kompletten Texts (beim Klick)
