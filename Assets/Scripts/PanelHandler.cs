@@ -1,9 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.Build;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+
+#if UNITY_EDITOR
+using UnityEditor.Build;
+#endif
 
 public class PanelHandler : MonoBehaviour
 {
