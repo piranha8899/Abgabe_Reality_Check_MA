@@ -36,27 +36,27 @@ public class PanelHandler : MonoBehaviour
     }
 
     [System.Serializable]
-    public class ProgressIndicator
+    public class AnimatedProgressIndicator
     {
-        public int requiredCompletions;
-        public GameObject[] indicatorObjects = new GameObject[3];
-        public void SetObjectsActive(bool state)
+        public GameObject indicatorObject;
+        public string triggerName = "NextState";
+        public Animator animator;
+
+        public void TriggerNextState()
         {
-            foreach (var obj in indicatorObjects)
+            if (indicatorObject != null && animator != null)
             {
-                if (obj != null)
-                {
-                    obj.SetActive(state);
-                }
+                animator.SetTrigger(triggerName);
             }
         }
     }
     
 
     public LevelCompletionPair[] levelCompletionPairs;
-    public ProgressIndicator[] progressIndicators;
+    public AnimatedProgressIndicator progressIndicator;
     public GameObject CompletionOverlay;
     public GameObject PanelContinueButton;
+    private int lastCompletedCount = 0; // Speichert den letzten bekannten Abschlussstand
 
     void Start()
     {
@@ -73,6 +73,15 @@ public class PanelHandler : MonoBehaviour
         }
         CheckTotalCompletion();
         StartCoroutine(CheckForTypingSequence());
+
+        // Initialisiere den Animator, falls nicht gesetzt
+        if (progressIndicator.indicatorObject != null && progressIndicator.animator == null)
+        {
+            progressIndicator.animator = progressIndicator.indicatorObject.GetComponent<Animator>();
+        }
+        
+        // Speichere den aktuellen Stand
+        lastCompletedCount = CountCompletedLevels();
         
     }
 
@@ -151,22 +160,14 @@ public class PanelHandler : MonoBehaviour
 
     private void UpdateProgressIndicator()
     {
-        int completedLevels = CountCompletedLevels();
+        int currentCompletedCount = CountCompletedLevels();
         
-        // Deaktiviere zuerst alle Indikatoren
-        foreach (var indicator in progressIndicators)
-            {
-            indicator.SetObjectsActive(false);
-            }
-
-        // Aktiviere die passenden Indikatoren
-        foreach (var indicator in progressIndicators)
+        // Prüfe, ob ein neues Level abgeschlossen wurde und Animation auslösen
+        if (currentCompletedCount > lastCompletedCount)
         {
-            if (indicator.requiredCompletions == completedLevels)
-            {
-                indicator.SetObjectsActive(true);
-                break;
-            }
+            // Aktualisiere die Animation nur, wenn tatsächlich etwas neues abgeschlossen wurde
+            progressIndicator.TriggerNextState();
+            lastCompletedCount = currentCompletedCount;
         }
     }
 
@@ -234,9 +235,10 @@ public class PanelHandler : MonoBehaviour
                 Debug.Log($"Typer-Fortschritt gelöscht: {keyToDelete}");
             }
         }
-
-
         PlayerPrefs.Save();
+
+        // Zurücksetzen des Zählers
+        lastCompletedCount = 0;
         // Aktualisiere die Anzeigen
         CheckAllLevelStatus();
         UpdateProgressIndicator();

@@ -12920,6 +12920,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2967737808006366985, guid: f99286b3516ddb24c968665c248231e0,
         type: 3}
+      propertyPath: m_text
+      value: "K\xFCche optimiert!"
+      objectReference: {fileID: 0}
+    - target: {fileID: 2967737808006366985, guid: f99286b3516ddb24c968665c248231e0,
+        type: 3}
       propertyPath: m_fontSize
       value: 60
       objectReference: {fileID: 0}
@@ -12996,12 +13001,12 @@ PrefabInstance:
     - target: {fileID: 7175547359547190914, guid: f99286b3516ddb24c968665c248231e0,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -26
+      value: -23.4
       objectReference: {fileID: 0}
     - target: {fileID: 7175547359547190914, guid: f99286b3516ddb24c968665c248231e0,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 357
+      value: 326.9
       objectReference: {fileID: 0}
     - target: {fileID: 7230742874248479546, guid: f99286b3516ddb24c968665c248231e0,
         type: 3}
@@ -13124,7 +13129,8 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 289097852208657318, guid: f99286b3516ddb24c968665c248231e0, type: 3}
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 4651054972634813901, guid: f99286b3516ddb24c968665c248231e0,
         type: 3}
