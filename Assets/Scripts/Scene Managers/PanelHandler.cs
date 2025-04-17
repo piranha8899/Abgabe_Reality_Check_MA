@@ -55,6 +55,7 @@ public class PanelHandler : MonoBehaviour
     public LevelCompletionPair[] levelCompletionPairs;
     public AnimatedProgressIndicator progressIndicator;
     public GameObject CompletionOverlay;
+    public float completionOverlayDelay = 5f; // Verzögerung für das Overlay
     public GameObject PanelContinueButton;
     private int lastCompletedCount = 0; // Speichert den letzten bekannten Abschlussstand
 
@@ -178,15 +179,22 @@ public class PanelHandler : MonoBehaviour
         int requiredCompletions = levelCompletionPairs.Length; // Anzahl der Level
         if (completedCount >= requiredCompletions)
         {
-            if(CompletionOverlay != null) CompletionOverlay.SetActive(true);
+            StartCoroutine(ShowCompletionOverlay());
             Debug.Log("Alle Level abgeschlossen!");
-            if(PanelContinueButton != null) PanelContinueButton.SetActive(true);
+
         }
         else
         {
            Debug.Log($"Fortschritt: {completedCount} Level abgeschlossen.");
            Debug.Log($"Noch {requiredCompletions - completedCount} Level zu absolvieren.");            
         }
+    }
+
+    private IEnumerator ShowCompletionOverlay()
+    {
+        yield return new WaitForSeconds(completionOverlayDelay); // Warten auf eingestellte Verzögerung
+        if (CompletionOverlay != null) CompletionOverlay.SetActive(true);
+        if (PanelContinueButton != null) PanelContinueButton.SetActive(true);
     }
 
     //Typing-Sequenz prüfen und abspielen
