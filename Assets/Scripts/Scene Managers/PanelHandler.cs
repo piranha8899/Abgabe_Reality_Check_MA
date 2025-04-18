@@ -21,20 +21,7 @@ public class PanelHandler : MonoBehaviour
         }
     }
 
-    void Awake()
-    {
-        DontDestroyOnLoad(gameObject); //Panel Handler über alle Szenen hinweg erhalten
-    }
-
     public string completionTyperId = "yz"; // ID wie aus Typer festlegen
-
-    [System.Serializable]
-    public class LevelCompletionPair
-    {
-        public string levelId;         // z.B. "level_kitchen"
-        public GameObject targetObject; // Das zu aktivierende GameObject
-    }
-
     [System.Serializable]
     public class AnimatedProgressIndicator
     {
@@ -51,13 +38,28 @@ public class PanelHandler : MonoBehaviour
         }
     }
     
-
     public LevelCompletionPair[] levelCompletionPairs;
     public AnimatedProgressIndicator progressIndicator;
     public GameObject CompletionOverlay;
     public float completionOverlayDelay = 5f; // Verzögerung für das Overlay
+    private bool completionOverlayShown = false; // Flag, um zu verhindern, dass das Overlay mehrmals angezeigt wird
+    public GameObject showCompletionOverlayButton; // Button, um das Overlay manuell anzuzeigen
     public GameObject PanelContinueButton;
     private int lastCompletedCount = 0; // Speichert den letzten bekannten Abschlussstand
+
+    [System.Serializable]
+    public class LevelCompletionPair
+    {
+        public string levelId;         // z.B. "level_kitchen"
+        public GameObject targetObject; // Das zu aktivierende GameObject
+    }
+
+    void Awake()
+    {
+        DontDestroyOnLoad(gameObject); //Panel Handler über alle Szenen hinweg erhalten
+        //Status des Overlays laden
+        completionOverlayShown = PlayerPrefs.GetInt("CompletionOverlayShown", 0) == 1;
+    }
 
     void Start()
     {
@@ -68,12 +70,18 @@ public class PanelHandler : MonoBehaviour
         {
             CompletionOverlay.SetActive(false);
         }
+
+        if (showCompletionOverlayButton != null)
+        {
+            showCompletionOverlayButton.SetActive(false);
+            showCompletionOverlayButton.GetComponent<Button>().onClick.AddListener(ReshowCompletionOverlay);
+        }
+
         if( PanelContinueButton != null)
         {
             PanelContinueButton.SetActive(false);
         }
-        CheckTotalCompletion();
-        StartCoroutine(CheckForTypingSequence());
+        
 
         // Initialisiere den Animator, falls nicht gesetzt
         if (progressIndicator.indicatorObject != null && progressIndicator.animator == null)
@@ -83,14 +91,17 @@ public class PanelHandler : MonoBehaviour
         
         // Speichere den aktuellen Stand
         lastCompletedCount = CountCompletedLevels();
-        
+
+        if (CountCompletedLevels() >= levelCompletionPairs.Length && completionOverlayShown)
+        {
+            if (showCompletionOverlayButton != null) showCompletionOverlayButton.SetActive(true);
+        }
+        CheckTotalCompletion();
+        StartCoroutine(CheckForTypingSequence());
     }
 
-
-
-     void OnEnable()
+    void OnEnable()
     {
-       
         if (SceneProgressManager.Instance != null)
         {
             SceneProgressManager.Instance.OnLevelCompletionChanged += OnLevelStatusChanged;
@@ -99,14 +110,12 @@ public class PanelHandler : MonoBehaviour
 
     void OnDisable()
     {
-       
         if (SceneProgressManager.Instance != null)
         {
             SceneProgressManager.Instance.OnLevelCompletionChanged -= OnLevelStatusChanged;
         }
     }
 
-    // Diese Methode lädt die spezifizierte Szene
     public void LoadScene(string SceneName)
     {
         SceneManager.LoadScene(SceneName);
@@ -122,10 +131,7 @@ public class PanelHandler : MonoBehaviour
     // Prüft den Status aller konfigurierten Level
     public void CheckAllLevelStatus()
     {
-        foreach (var pair in levelCompletionPairs)
-        {
-            CheckLevelStatus(pair.levelId);
-        }
+        foreach (var pair in levelCompletionPairs) CheckLevelStatus(pair.levelId);
     }
 
     // Prüft den Status eines spezifischen Levels
@@ -162,7 +168,6 @@ public class PanelHandler : MonoBehaviour
     private void UpdateProgressIndicator()
     {
         int currentCompletedCount = CountCompletedLevels();
-        
         // Prüfe, ob ein neues Level abgeschlossen wurde und Animation auslösen
         if (currentCompletedCount > lastCompletedCount)
         {
@@ -179,9 +184,16 @@ public class PanelHandler : MonoBehaviour
         int requiredCompletions = levelCompletionPairs.Length; // Anzahl der Level
         if (completedCount >= requiredCompletions)
         {
-            StartCoroutine(ShowCompletionOverlay());
-            Debug.Log("Alle Level abgeschlossen!");
+            if(!completionOverlayShown)
+            {
+                StartCoroutine(ShowCompletionOverlay());
+            }
 
+            //Wenn Overlay schon angezeigt wurde, nur Button anzeigen
+            else if (showCompletionOverlayButton != null)
+            {
+                showCompletionOverlayButton.SetActive(true);
+            }
         }
         else
         {
@@ -193,8 +205,26 @@ public class PanelHandler : MonoBehaviour
     private IEnumerator ShowCompletionOverlay()
     {
         yield return new WaitForSeconds(completionOverlayDelay); // Warten auf eingestellte Verzögerung
-        if (CompletionOverlay != null) CompletionOverlay.SetActive(true);
-        if (PanelContinueButton != null) PanelContinueButton.SetActive(true);
+        ReshowCompletionOverlay();
+    }
+
+    public void ReshowCompletionOverlay()
+    {
+        if (CompletionOverlay != null)
+        {
+            CompletionOverlay.SetActive(true);
+        }
+        
+        if (PanelContinueButton != null) 
+        {
+            PanelContinueButton.SetActive(true);
+        }
+        
+        // Setze das Flag und speichere den Zustand
+        completionOverlayShown = true;
+        PlayerPrefs.SetInt("CompletionOverlayShown", 1);
+        PlayerPrefs.Save();
+        if(showCompletionOverlayButton != null) showCompletionOverlayButton.SetActive(false);
     }
 
     //Typing-Sequenz prüfen und abspielen
@@ -202,7 +232,6 @@ public class PanelHandler : MonoBehaviour
     {
         yield return new WaitForSeconds(0.2f); //Warten, bis alles geladen ist
         int completedCount = CountCompletedLevels();
-
         //Prüfen, ob Completion-Sequenz gespielt werden soll
         if (completedCount >= levelCompletionPairs.Length && !PlayerPrefs.HasKey($"Typer_{completionTyperId}_Played"))
         {
@@ -214,7 +243,6 @@ public class PanelHandler : MonoBehaviour
             else
             {
                 Debug.Log($"Typing-ID {completionTyperId} nicht gefunden.");
-
             }
         }
     }
@@ -222,7 +250,6 @@ public class PanelHandler : MonoBehaviour
     // Alle Szenen zurücksetzen (kompletter Reset)
     public void ResetAllScenes()
     {
-
     foreach (var pair in levelCompletionPairs)
         {
         if (!string.IsNullOrEmpty(pair.levelId))
@@ -243,8 +270,11 @@ public class PanelHandler : MonoBehaviour
                 Debug.Log($"Typer-Fortschritt gelöscht: {keyToDelete}");
             }
         }
-        PlayerPrefs.Save();
 
+        // Completion Overlay Status zurücksetzen
+        PlayerPrefs.DeleteKey("CompletionOverlayShown");
+        completionOverlayShown = false;
+        PlayerPrefs.Save();
         // Zurücksetzen des Zählers
         lastCompletedCount = 0;
         // Aktualisiere die Anzeigen
