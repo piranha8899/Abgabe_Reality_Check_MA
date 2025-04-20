@@ -12,6 +12,7 @@ public class LevelStart : MonoBehaviour
     [SerializeField] private float displayDuration = 3.0f;
     [SerializeField] private float fadeDuration = 1.0f;
     [SerializeField] private Button instructionButton;
+    [SerializeField] private GameObject completionOverlay; // Referenz auf das Overlay-Objekt
 
     private bool isCoroutineRunning = false;
 
@@ -53,18 +54,23 @@ public class LevelStart : MonoBehaviour
 
     private System.Collections.IEnumerator HandleTextDisplay()
     {
-        isCoroutineRunning = true;
+        yield return new WaitForEndOfFrame();
 
-        SetRaycasts(true);
-        //Einblenden
-        yield return StartCoroutine(FadeUI(0f, 1f, fadeDuration));
-        // Warte für die eingestellte Zeit
-        yield return new WaitForSeconds(displayDuration);
-        //Ausblenden
-        yield return StartCoroutine(FadeUI(1f, 0f, fadeDuration));
-        SetRaycasts(false);
+        if(!completionOverlay.activeSelf)
+        {
+            isCoroutineRunning = true;
 
-        isCoroutineRunning = false;
+            SetRaycasts(true);
+            //Einblenden
+            yield return StartCoroutine(FadeUI(0f, 1f, fadeDuration));
+            // Warte für die eingestellte Zeit
+            yield return new WaitForSeconds(displayDuration);
+            //Ausblenden
+            yield return StartCoroutine(FadeUI(1f, 0f, fadeDuration));
+            SetRaycasts(false);
+
+            isCoroutineRunning = false;
+        }
     }
 
      private System.Collections.IEnumerator FadeUI(float startAlpha, float endAlpha, float duration)

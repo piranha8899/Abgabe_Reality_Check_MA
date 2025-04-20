@@ -51,6 +51,7 @@ public class ButtonAnimationManager : MonoBehaviour
     // Manuelles Auslösen eines Scans
     public void ScanForAnimatedButtons()
     {
+        //Bei Sceneload zuerst initialisieren, dann scannen
         if(sceneLoad)
         {
             StartCoroutine(DelayedScan());
