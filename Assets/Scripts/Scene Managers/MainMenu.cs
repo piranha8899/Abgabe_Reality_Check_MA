@@ -43,18 +43,19 @@ public class MainMenu : MonoBehaviour
             
         if (settingsButton != null)
             settingsButton.onClick.AddListener(OpenSettings);
+            bool anyLevelCompleted = CheckIfAnyLevelCompleted();
+            settingsButton.interactable = anyLevelCompleted; // Button nur aktivieren, wenn mindestens ein Level abgeschlossen ist
             
         if (goalsButton != null)
         {
             goalsButton.onClick.AddListener(OpenGoals);
-            bool anyLevelCompleted = CheckIfAnyLevelCompleted();
             goalsButton.interactable = anyLevelCompleted; // Button nur aktivieren, wenn mindestens ein Level abgeschlossen ist
         }
             
         if (quitButton != null)
             quitButton.onClick.AddListener(QuitGame);
 
-            settingsPanel.SetActive(false); // Setze das Einstellungs-Panel auf unsichtbar
+        settingsPanel.SetActive(false);
             
         
     }

@@ -26,7 +26,7 @@ public class ApplianceProgressManager : MonoBehaviour
     
     void Update()
     {
-        if (checkContinuously)
+        if (checkContinuously && this.gameObject.activeInHierarchy && targetImage != null)
         {
             UpdateImageVisibility();
         }

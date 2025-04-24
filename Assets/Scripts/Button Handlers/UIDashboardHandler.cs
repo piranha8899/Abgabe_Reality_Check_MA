@@ -21,9 +21,6 @@ public class UIDashboardHandler : MonoBehaviour
 
         if (SceneProgressManager.Instance != null)
         {
-            SceneProgressManager.Instance.OnLevelCompletionChanged += HandleLevelCompletion;
-
-            // Prüfe initialen Status
             if (showOverlayAutomatically && SceneProgressManager.Instance.IsLevelCompleted)
             {
                 ShowOverlay();
@@ -38,9 +35,21 @@ public class UIDashboardHandler : MonoBehaviour
         }
     }
 
-    void HandleLevelCompletion(bool isCompleted)
+    //Overlay über einen Button Event triggern. Muss auf Button gesetzt werden.
+    public void TriggerOverlayCheck()
     {
-        if (isCompleted && showOverlayAutomatically)
+        StartCoroutine(OverlayCheck());
+    }
+
+    private IEnumerator OverlayCheck()
+    {
+        // Warten, damit Overlay schliessen kann
+        yield return new WaitForSeconds(0.3f);
+        
+        // Prüfe, ob das Level abgeschlossen ist und zeige ggf. das Completion Overlay
+        if (SceneProgressManager.Instance != null && 
+            SceneProgressManager.Instance.IsLevelCompleted && 
+            showOverlayAutomatically)
         {
             ShowOverlay();
         }
@@ -52,14 +61,6 @@ public class UIDashboardHandler : MonoBehaviour
         {
         //Code für Abschlusscheck möglich
         }
-    }
-
-    void OnDestroy()
-    {
-    if (SceneProgressManager.Instance != null)
-    {
-        SceneProgressManager.Instance.OnLevelCompletionChanged -= HandleLevelCompletion;
-    }
     }
 
 
