@@ -53,6 +53,12 @@ public class SceneProgressManager : MonoBehaviour
     private string SaveKey => !string.IsNullOrEmpty(LevelIdentifier) ? $"Level_{LevelIdentifier}_Completed" : "";
     private bool isLevelCompleted = false;
     public System.Action<bool> OnLevelCompletionChanged;
+    private int previousCompletedConditionsCount = 0;
+    public System.Action OnProgressMade; //Event, wenn Fortschritt gemacht wurde
+    [SerializeField] private Animator progressAnimator; //Animator
+    [SerializeField] private string progressTriggerName = "progress"; //Trigger-Name für Animation
+    [SerializeField] private string endprogressTriggerName = "endprogress"; //Trigger-Name für EndAnimation
+
 
     //Handelt den LevelIdentifier
     public string LevelIdentifier 
@@ -201,6 +207,7 @@ public class SceneProgressManager : MonoBehaviour
     } 
 
     //Prüft alle definierten Bedingungen
+    //Prüft alle definierten Bedingungen
     public bool CheckLevelCompletion()
     {
         // Wenn Level-Tracking nicht aktiviert ist, passiert nichts
@@ -209,13 +216,16 @@ public class SceneProgressManager : MonoBehaviour
             return false;
         }
         
-        // Sind keine Bedingungen definiert, wird false zurückgegeben
+        // Wenn keine Bedingungen definiert, wird false zurückgegeben
         if (completionConditions == null || completionConditions.Length == 0)
         {
             Debug.Log("Keine Level-Bedingungen definiert");
             IsLevelCompleted = false;
             return false;
         }
+
+        int currentCompletedCount = 0;
+        bool allConditionsMet = true;
 
         foreach (var condition in completionConditions)
         {
@@ -228,21 +238,55 @@ public class SceneProgressManager : MonoBehaviour
             if (!sceneValues.ContainsKey(condition.key))
             {
                 Debug.Log($"Fehlender Wert für Key: {condition.key}");
-                IsLevelCompleted = false;
-                return false;
+                allConditionsMet = false;
+                continue; // Statt return false, damit wir die Zählung fortsetzen können
             }
 
-            if (!CheckCondition(condition, sceneValues[condition.key]))
+            if (CheckCondition(condition, sceneValues[condition.key]))
             {
-                Debug.Log($"Bedingung nicht erfüllt für Key: {condition.key}");
-                IsLevelCompleted = false;
-                return false;
+                currentCompletedCount++;
+            }
+            else
+            {
+                allConditionsMet = false;
             }
         }
+
+        // Prüfen, ob Fortschritt gemacht wurde
+        if (currentCompletedCount > previousCompletedConditionsCount)
+        {
+            // Animation triggern
+            if (progressAnimator != null && !string.IsNullOrEmpty(progressTriggerName))
+            {
+                progressAnimator.SetTrigger(progressTriggerName);
+                Debug.Log($"Fortschrittsanimation getriggert ({currentCompletedCount}/{completionConditions.Length})");
+            }
+            
+            // Event auslösen
+            OnProgressMade?.Invoke();
+            
+            // Neuen Zählerstand speichern
+            previousCompletedConditionsCount = currentCompletedCount;
+        }
         
-        Debug.Log("Alle Level-Bedingungen erfüllt!");
-        IsLevelCompleted = true;
-        return true;
+        // Level ist nur abgeschlossen, wenn alle Bedingungen erfüllt sind
+        if (allConditionsMet)
+        {
+            Debug.Log("Alle Level-Bedingungen erfüllt!");
+            IsLevelCompleted = true;
+            // Animation triggern, wenn alle Bedingungen erfüllt sind
+            if (progressAnimator != null && !string.IsNullOrEmpty(endprogressTriggerName))
+            {
+                progressAnimator.SetTrigger(endprogressTriggerName);
+                Debug.Log("Endanimation getriggert");
+            }
+            return true;
+        }
+        else
+        {
+            IsLevelCompleted = false;
+            return false;
+        }
     }
 
     //Setzt Completion manuell, wenn Bedingungen erfüllt
@@ -284,6 +328,7 @@ public class SceneProgressManager : MonoBehaviour
     // Variablen zurücksetzen
     sceneValues.Clear();
     isLevelCompleted = false;
+    previousCompletedConditionsCount = 0;
     
     // Levelfortschritt löschen
     if (!string.IsNullOrEmpty(SaveKey))

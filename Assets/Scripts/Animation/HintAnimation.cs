@@ -8,18 +8,25 @@ public class HintAnimation : MonoBehaviour
     [System.Serializable]
     public class HintConfig
     {
-        public GameObject hintObject;     // GameObject mit Animation Controller
+        public string hintId; // ID für den Hinweis
+        public GameObject hintObject;
         public float delay = 5f; // Zeit in Sekunden bis zur Einblendung
         public Button associatedButton;
+        public string[] requiredHints;
+        public List<GameObject> blockingObjects = new List<GameObject>(); // Objekte, die den Hinweis blockieren (z.B Overlays)
+        public bool isShown = false;
+        public bool isDismissed = false;
     }
-    public List<HintConfig> hintSequence = new List<HintConfig>();
-    private int currentHintIndex = -1;
-    private Coroutine activeHintCoroutine;
+    public List<HintConfig> availableHints = new List<HintConfig>();
+    private Dictionary<string, HintConfig> hintsById = new Dictionary<string, HintConfig>();
+    private List<Coroutine> activeHintCoroutines = new List<Coroutine>();
+    private bool systemActive = true;
+    
 
     void Start()
     {
-        // Alle Hint-Objekte initial deaktivieren
-        foreach (var hint in hintSequence)
+        // Alle Hint-Objekte initial deaktivieren und in Dictionary eintragen
+        foreach (var hint in availableHints)
         {
             if (hint.hintObject != null)
             {
@@ -30,65 +37,118 @@ public class HintAnimation : MonoBehaviour
             {
                 hint.associatedButton.onClick.AddListener(() => OnButtonClicked(hint));
             }
+
+            // Hinweis im Dictionary registrieren
+            hintsById[hint.hintId] = hint;
         }
         
-        StartHint();
+        // Starte Überwachung für alle Hinweise
+        StartHintMonitoring();
     }
 
-    public void StartHint()
+    public void StartHintMonitoring()
     {
-        // Vorherigen Hinweis stoppen
-        if (activeHintCoroutine != null)
+        systemActive = true;
+        foreach (var hint in availableHints)
         {
-            StopCoroutine(activeHintCoroutine);
-        }
-        
-        if (currentHintIndex >= 0 && currentHintIndex < hintSequence.Count)
-        {
-            var currentHint = hintSequence[currentHintIndex];
-            if (currentHint.hintObject != null)
+            if (!hint.isDismissed)
             {
-                currentHint.hintObject.SetActive(false);
+                var coroutine = StartCoroutine(MonitorHint(hint));
+                activeHintCoroutines.Add(coroutine);
             }
         }
-
-        currentHintIndex++; // Nächster Hinweis
-
-        // Fortschritt prüfen
-        if (currentHintIndex >= hintSequence.Count)
-        {
-            currentHintIndex = -1;
-            return;
-        }
-        
-        // Nächsten Hinweis mit Verzögerung starten
-        activeHintCoroutine = StartCoroutine(ShowHint(currentHintIndex));
     }
 
-    private IEnumerator ShowHint(int hintIndex)
+    public void StopAllHints()
     {
-        var hint = hintSequence[hintIndex];
-        
-        yield return new WaitForSeconds(hint.delay);
-        
-        // Nur anzeigen, wenn das noch der aktuelle Hinweis ist
-        if (currentHintIndex == hintIndex && hint.hintObject != null)
+        systemActive = false;
+        foreach (var coroutine in activeHintCoroutines)
+        {
+            if (coroutine != null)
+            {
+                StopCoroutine(coroutine);
+            }
+        }
+        activeHintCoroutines.Clear();
+        // Alle Hinweise ausblenden
+        foreach (var hint in availableHints)
+        {
+            if (hint.hintObject != null)
+            {
+                hint.hintObject.SetActive(false);
+            }
+        }
+    }
+
+    // Überprüft kontinuierlich, ob ein Hinweis angezeigt werden sollte
+    private IEnumerator MonitorHint(HintConfig hint)
+    {
+        // Kontinuierliche Überwachung, bis der Hinweis bestätigt wurde
+        while (!hint.isDismissed && systemActive)
+        {
+            bool canShow = true;
+            // requiredHints überprüfen
+            if (hint.requiredHints != null && hint.requiredHints.Length > 0)
+            {
+                foreach (var requiredHintId in hint.requiredHints)
+                {
+                    if (hintsById.TryGetValue(requiredHintId, out HintConfig requiredHint))
+                    {
+                        if (!requiredHint.isShown || !requiredHint.isDismissed)
+                        {
+                            canShow = false;
+                            break;
+                        }
+                    }
+                }
+            }
+
+            CheckBlockingObjects(hint, ref canShow); // Überprüfe blockierende Objekte
+            // Zeige den Hinweis an, wenn alle Bedingungen erfüllt sind
+            if (canShow && !hint.isShown)
+            {
+                yield return new WaitForSeconds(hint.delay); // Warte auf die Verzögerung
+                CheckBlockingObjects(hint, ref canShow); // Überprüfe blockierende Objekte nochmals nach Delay
+                if(canShow && !hint.isShown &&systemActive && !hint.isDismissed)
+                    ShowHint(hint);
+            }
+            yield return new WaitForSeconds(1f); // Regelmässige Überprüfung
+        }
+    }
+    private void ShowHint(HintConfig hint)
+    {
+        if (hint.hintObject != null)
         {
             hint.hintObject.SetActive(true);
+            hint.isShown = true;
         }
     }
-
-    // Wird aufgerufen, wenn ein Button geklickt wird
+    private void HideHint(HintConfig hint)
+    {
+        if (hint.hintObject != null)
+        {
+            hint.hintObject.SetActive(false);
+        }
+    }
     private void OnButtonClicked(HintConfig clickedHint)
     {
-        // Den aktuellen Hinweis deaktivieren
-        if (clickedHint.hintObject != null)
-        {
-            clickedHint.hintObject.SetActive(false);
-        }
+        // Hinweis als bestätigt markieren
+        clickedHint.isDismissed = true;
         
-        // Nächster Hinweis
-        StartHint();
+        // Hinweis ausblenden
+        HideHint(clickedHint);
     }
-
+    private void CheckBlockingObjects(HintConfig hint, ref bool canShow)
+    {if (canShow && hint.blockingObjects != null && hint.blockingObjects.Count > 0)
+            {
+                foreach (var blockingObject in hint.blockingObjects)
+                {
+                    if (blockingObject != null && blockingObject.activeInHierarchy)
+                    {
+                        canShow = false; // Hinweis kann nicht angezeigt werden, wenn ein blockierendes Objekt aktiv ist
+                        break;
+                    }
+                }
+            }
+    }
 }
