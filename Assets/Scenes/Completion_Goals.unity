@@ -157,7 +157,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0.00024414062, y: -1.0000992}
+  m_AnchoredPosition: {x: 0.00024414062, y: -1.0000916}
   m_SizeDelta: {x: 0.0036621, y: -1.9997}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &85610755
@@ -242,7 +242,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0.00024414062, y: -1.0000992}
+  m_AnchoredPosition: {x: 0.00024414062, y: -1.0000916}
   m_SizeDelta: {x: 0.0036621, y: -1.9997}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &114016970
@@ -552,6 +552,7 @@ GameObject:
   m_Component:
   - component: {fileID: 602035504}
   - component: {fileID: 602035505}
+  - component: {fileID: 602035506}
   m_Layer: 5
   m_Name: "toggle_k\xFChlschrank"
   m_TagString: Untagged
@@ -628,6 +629,27 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_IsOn: 0
+--- !u!95 &602035506
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 602035503}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 57d9baccf1ef83249b579d8ea2e2c845, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!224 &671692341 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 3374283178856956317, guid: 066a4c82a75435d45beb0b692163c8b7,
@@ -1381,6 +1403,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1005550435}
   - component: {fileID: 1005550436}
+  - component: {fileID: 1005550437}
   m_Layer: 5
   m_Name: toggle_backofen
   m_TagString: Untagged
@@ -1398,7 +1421,7 @@ RectTransform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 804432064}
   - {fileID: 85610754}
@@ -1457,6 +1480,27 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_IsOn: 0
+--- !u!95 &1005550437
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1005550434}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: ec10730e19d2ba249bb8cc7f7816f2e0, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &1039901902
 GameObject:
   m_ObjectHideFlags: 0
@@ -2083,6 +2127,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1144168911}
   - component: {fileID: 1144168912}
+  - component: {fileID: 1144168913}
   m_Layer: 5
   m_Name: "toggle_geschirrsp\xFCler"
   m_TagString: Untagged
@@ -2159,6 +2204,27 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_IsOn: 0
+--- !u!95 &1144168913
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1144168910}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 1cc3b57015fbe2044a97cb466e4d9cbd, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &1327329164
 GameObject:
   m_ObjectHideFlags: 0
@@ -3197,9 +3263,9 @@ MonoBehaviour:
   - toggle_geschirrspueler
   - toggle_kuehlschrank
   toggleDisplayNames:
-  - Backofen
-  - "Geschirrsp\xFCler"
-  - "K\xFChlschrank"
+  - "Backofen: Umluft nutzen, vorheizen nur wenn n\xF6tig"
+  - "Geschirrsp\xFCler: Eco-Modus und f\xFCllen"
+  - "K\xFChl- und Gefrierschrank: Richtig einstellen"
   nextButton: {fileID: 1106279340}
   goalOverlayPanel: {fileID: 873983806}
   listContainer: {fileID: 1921557153}
@@ -3257,7 +3323,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0.00024414062, y: -1.0000992}
+  m_AnchoredPosition: {x: 0.00024414062, y: -1.0000916}
   m_SizeDelta: {x: 0.0036621, y: -1.9997}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1830296579
@@ -3364,7 +3430,7 @@ MonoBehaviour:
     m_Top: 250
     m_Bottom: 300
   m_ChildAlignment: 1
-  m_Spacing: 0
+  m_Spacing: 30
   m_ChildForceExpandWidth: 1
   m_ChildForceExpandHeight: 0
   m_ChildControlWidth: 0
