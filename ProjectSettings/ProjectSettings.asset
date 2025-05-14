@@ -264,8 +264,8 @@ PlayerSettings:
   AndroidTargetDevices: 0
   AndroidSplashScreenScale: 0
   androidSplashScreen: {fileID: 0}
-  AndroidKeystoreName: E:/Luca/OneDrive/Studium/FS 25 Masterarbeit/6_Assets/debug_keystore.keystore
-  AndroidKeyaliasName: debug_ma
+  AndroidKeystoreName: '{inproject}: Builds/Keystore/user.keystore'
+  AndroidKeyaliasName: key2
   AndroidEnableArmv9SecurityFeatures: 0
   AndroidBuildApkPerCpuArchitecture: 0
   AndroidTVCompatibility: 0
