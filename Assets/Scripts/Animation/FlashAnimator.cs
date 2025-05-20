@@ -11,7 +11,6 @@ public class FlashAnimator : MonoBehaviour
     [SerializeField] private float minTimeScale = 0.95f;  // Minimaler Zeitfaktor für Animatoren
     [SerializeField] private float maxTimeScale = 1.05f;  // Maximaler Zeitfaktor für Animatoren
 
-    // Liste aller Animatoren (Child eines Objekts)
     private Animator[] childAnimators;
 
     void OnEnable()
@@ -34,7 +33,7 @@ public class FlashAnimator : MonoBehaviour
     {
         StopAllCoroutines();
 
-        // Alle Animationen auf false setzen
+        // Alle Animationen auf false setzen (Initialisierung)
         if (childAnimators != null)
         {
             foreach (Animator animator in childAnimators)

@@ -1,4 +1,4 @@
-//Dieses Skript als Manager in Empty GameObject im Hauptmenü
+// Dieses Skript als Manager in Empty GameObject im Hauptmenü
 
 using UnityEngine;
 using UnityEngine.UI;
@@ -14,7 +14,7 @@ public class ButtonAnimationManager : MonoBehaviour
     [Header("Animation Default")]
     public float duration = 0.1f;
 
-    // Verwaltete Buttons mit aktiven Overlays
+    //Verwaltete Buttons mit aktiven Overlays
     private Dictionary<Button, GameObject> managedButtons = new Dictionary<Button, GameObject>();
     private bool sceneLoad = false; // Flag für Szenenwechsel
 
@@ -38,7 +38,7 @@ public class ButtonAnimationManager : MonoBehaviour
         
         else
         {
-            Destroy(gameObject); // Zerstöre Duplikate
+            Destroy(gameObject); //Zerstöre Duplikate
         }
     }
 
@@ -51,7 +51,7 @@ public class ButtonAnimationManager : MonoBehaviour
     // Manuelles Auslösen eines Scans
     public void ScanForAnimatedButtons()
     {
-        //Bei Sceneload zuerst initialisieren, dann scannen
+        // Bei Sceneload zuerst initialisieren, dann scannen
         if(sceneLoad)
         {
             StartCoroutine(DelayedScan());
@@ -82,7 +82,7 @@ public class ButtonAnimationManager : MonoBehaviour
 
     private void NormalScan()
     {
-        // Finde alle AnimatedButtons in der aktuellen Szene, Skript muss auf Button liegen
+        // Finde alle animierten Buttons in der aktuellen Szene, Skript muss auf Button liegen
         AnimatedButton[] buttons = FindObjectsOfType<AnimatedButton>();
     
         foreach (var animBtn in buttons)
@@ -94,7 +94,7 @@ public class ButtonAnimationManager : MonoBehaviour
         }
     }
 
-    //Button-Animation aufsetzen
+    // Button-Animation aufsetzen
     private void SetupButtonAnimation(AnimatedButton animatedButton)
     {
         Button button = animatedButton.Button;
@@ -127,7 +127,7 @@ public class ButtonAnimationManager : MonoBehaviour
         overlayButton.onClick.AddListener(() => {
             if (button.interactable)
             {
-                DOTween.Sequence()
+                DOTween.Sequence() // Braucht DOTween Plugin
                     .Append(targetImage.DOColor(animatedButton.pressedColor, duration))
                     .Join(button.transform.DOScale(originalScale * animatedButton.pressedScale, duration))
                     .Append(targetImage.DOColor(originalColor, duration))
@@ -136,7 +136,7 @@ public class ButtonAnimationManager : MonoBehaviour
             }
         });
         
-        overlay.transform.SetAsLastSibling(); // Nach vorne bringen
+        overlay.transform.SetAsLastSibling();
         
         // In die Liste der verwalteten Buttons aufnehmen
         managedButtons[button] = overlay;

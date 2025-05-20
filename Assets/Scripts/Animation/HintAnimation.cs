@@ -25,7 +25,7 @@ public class HintAnimation : MonoBehaviour
 
     void Start()
     {
-        // Alle Hint-Objekte initial deaktivieren und in Dictionary eintragen
+        // Alle Hint-Objekte deaktivieren und in Dictionary eintragen
         foreach (var hint in availableHints)
         {
             if (hint.hintObject != null)
@@ -37,8 +37,6 @@ public class HintAnimation : MonoBehaviour
             {
                 hint.associatedButton.onClick.AddListener(() => OnButtonClicked(hint));
             }
-
-            // Hinweis im Dictionary registrieren
             hintsById[hint.hintId] = hint;
         }
         
@@ -83,7 +81,7 @@ public class HintAnimation : MonoBehaviour
     // Überprüft kontinuierlich, ob ein Hinweis angezeigt werden sollte
     private IEnumerator MonitorHint(HintConfig hint)
     {
-        // Kontinuierliche Überwachung, bis der Hinweis bestätigt wurde
+        // Überwachung, bis der Hinweis bestätigt wurde
         while (!hint.isDismissed && systemActive)
         {
             bool canShow = true;
@@ -107,7 +105,7 @@ public class HintAnimation : MonoBehaviour
             // Zeige den Hinweis an, wenn alle Bedingungen erfüllt sind
             if (canShow && !hint.isShown)
             {
-                yield return new WaitForSeconds(hint.delay); // Warte auf die Verzögerung
+                yield return new WaitForSeconds(hint.delay);
                 CheckBlockingObjects(hint, ref canShow); // Überprüfe blockierende Objekte nochmals nach Delay
                 if(canShow && !hint.isShown &&systemActive && !hint.isDismissed)
                     ShowHint(hint);

@@ -66,7 +66,7 @@ public class GoalSaver : MonoBehaviour
         if (closeOverlayButton != null)
             closeOverlayButton.onClick.AddListener(() => SceneManager.LoadScene("MainMenu"));
             
-        // FallbackBackButton-Listener einrichten
+        // Fallback-Listener einrichten
         if (fallbackBackButton != null)
         {
             fallbackBackButton.onClick.RemoveAllListeners();
@@ -189,7 +189,7 @@ public class GoalSaver : MonoBehaviour
         }
     }
 
-    // Hilfsmethode zum Abrufen der Toggle-Zustände für Notifications
+    // Abrufen der Toggle-Zustände für Notifications
     public List<string> GetSelectedToggleKeys()
     {
         List<string> selectedKeys = new List<string>();
