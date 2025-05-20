@@ -26,9 +26,6 @@ public class LevelStart : MonoBehaviour
             Debug.LogError("Fehlendes Intro-Element.");
             return;
         }
-
-        
-
         // Text und Hintergrund initial unsichtbar
         SetUIAlpha(0f);
 
@@ -40,7 +37,6 @@ public class LevelStart : MonoBehaviour
         {
             instructionButton.onClick.AddListener(TriggerInstruction);
         }
-        
     }
 
     public void TriggerInstruction()
@@ -73,7 +69,8 @@ public class LevelStart : MonoBehaviour
         }
     }
 
-     private System.Collections.IEnumerator FadeUI(float startAlpha, float endAlpha, float duration)
+    // Fade UI ein- und ausblenden
+    private System.Collections.IEnumerator FadeUI(float startAlpha, float endAlpha, float duration)
     {
         float elapsedTime = 0f;
         while (elapsedTime < duration)
@@ -105,13 +102,14 @@ public class LevelStart : MonoBehaviour
         }
     }
 
+    // Darstellung setzen
     public void SetRaycasts(bool enableRaycasts)
     {
-        if(introBackgroundImage != null)
+        if (introBackgroundImage != null)
         {
             introBackgroundImage.raycastTarget = enableRaycasts;
         }
-        if(introText != null)
+        if (introText != null)
         {
             introText.raycastTarget = enableRaycasts;
         }

@@ -177,7 +177,7 @@ public class PanelHandler : MonoBehaviour
         }
     }
 
-    //Totale Level Completion prüfen
+    // Totale Level Completion prüfen
     private void CheckTotalCompletion()
     {
         int completedCount = CountCompletedLevels();
@@ -189,7 +189,7 @@ public class PanelHandler : MonoBehaviour
                 StartCoroutine(ShowCompletionOverlay());
             }
 
-            //Wenn Overlay schon angezeigt wurde, nur Button anzeigen
+            // Wenn Overlay schon angezeigt wurde, nur Button anzeigen
             else if (showCompletionOverlayButton != null)
             {
                 showCompletionOverlayButton.SetActive(true);

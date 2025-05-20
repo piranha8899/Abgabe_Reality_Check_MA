@@ -7,7 +7,7 @@ using UnityEngine.UI;
 public class SceneProgressManager : MonoBehaviour
 {
     private static SceneProgressManager instance;
-    //Instanz erstellen
+    // Instanz erstellen
     public static SceneProgressManager Instance    
     {
         get
@@ -21,10 +21,10 @@ public class SceneProgressManager : MonoBehaviour
 
     [SerializeField] private Button directCompleteButton; // Button für den direkten Levelabschluss (NUR FÜR TESTING)
     
-    //Dictionary zum Speichern verschiedener Werte anlegen
+    // Dictionary zum Speichern verschiedener Werte anlegen
     private Dictionary<string, object> sceneValues = new Dictionary<string, object>();
 
-    public enum ConditionValueType //Kann im Inspector ausgewählt werden
+    public enum ConditionValueType
     {
         Boolean,
         Integer,
@@ -47,20 +47,20 @@ public class SceneProgressManager : MonoBehaviour
     
     public LevelCondition[] completionConditions;
 
-    //Levelabschluss-Key
+    // Levelabschluss-Key
     [Header("Level Completion")]
-    [SerializeField] private string levelIdentifier = ""; // z.B. "Level1", "Tutorial" etc.
+    [SerializeField] private string levelIdentifier = ""; // z.B. "Achtung: Level-IDs immer in Inspector überprüfen, Merhfachverwendung!
     private string SaveKey => !string.IsNullOrEmpty(LevelIdentifier) ? $"Level_{LevelIdentifier}_Completed" : "";
     private bool isLevelCompleted = false;
     public System.Action<bool> OnLevelCompletionChanged;
     private int previousCompletedConditionsCount = 0;
-    public System.Action OnProgressMade; //Event, wenn Fortschritt gemacht wurde
-    [SerializeField] private Animator progressAnimator; //Animator
-    [SerializeField] private string progressTriggerName = "progress"; //Trigger-Name für Animation
-    [SerializeField] private string endprogressTriggerName = "endprogress"; //Trigger-Name für EndAnimation
+    public System.Action OnProgressMade; // Event, wenn Fortschritt gemacht wurde
+    [SerializeField] private Animator progressAnimator; // Animator
+    [SerializeField] private string progressTriggerName = "progress"; // Trigger-Name für Animation
+    [SerializeField] private string endprogressTriggerName = "endprogress"; // Trigger-Name für EndAnimation
 
 
-    //Handelt den LevelIdentifier
+    // Handelt den LevelIdentifier
     public string LevelIdentifier 
 {
     get { return levelIdentifier; }
@@ -72,7 +72,7 @@ public class SceneProgressManager : MonoBehaviour
         PlayerPrefs.Save();
     }
 }
-    //Prüft, ob LevelIdentifier oder CompletionConditions gesetzt sind
+    // Prüft, ob LevelIdentifier oder CompletionConditions gesetzt sind
     private bool IsLevelTrackingEnabled => !string.IsNullOrEmpty(LevelIdentifier) && 
                                     completionConditions != null && 
                                     completionConditions.Length > 0;
@@ -136,7 +136,7 @@ public class SceneProgressManager : MonoBehaviour
     }
 
     void Start()
-    { //Level Direkt abschliessen (NUR FÜR TESTING)
+    { // Level Direkt abschliessen (NUR FÜR TESTING)
      if (directCompleteButton != null)
     {
         directCompleteButton.onClick.AddListener(() => {
@@ -147,7 +147,7 @@ public class SceneProgressManager : MonoBehaviour
     }   
     }
 
-    //Variablenwert speichern, Schlüsselname wird definiert
+    // Variablenwert speichern, Schlüsselname wird definiert
     public void SetValue(string key, object value)
     {
     if (string.IsNullOrEmpty(key)) return;
@@ -168,7 +168,7 @@ public class SceneProgressManager : MonoBehaviour
         }
         return defaultValue;
     }
-    //Prüft, ob ein entsprechender Schlüssel existiert
+    // Prüfe, ob ein entsprechender Schlüssel existiert
     public bool HasValue(string key)
     {
         return sceneValues.ContainsKey(key);
@@ -205,8 +205,6 @@ public class SceneProgressManager : MonoBehaviour
         }
     catch { return false; }
     } 
-
-    //Prüft alle definierten Bedingungen
     //Prüft alle definierten Bedingungen
     public bool CheckLevelCompletion()
     {
@@ -239,7 +237,7 @@ public class SceneProgressManager : MonoBehaviour
             {
                 Debug.Log($"Fehlender Wert für Key: {condition.key}");
                 allConditionsMet = false;
-                continue; // Statt return false, damit wir die Zählung fortsetzen können
+                continue;
             }
 
             if (CheckCondition(condition, sceneValues[condition.key]))
@@ -289,7 +287,7 @@ public class SceneProgressManager : MonoBehaviour
         }
     }
 
-    //Setzt Completion manuell, wenn Bedingungen erfüllt
+    // Setzt Completion manuell, wenn Bedingungen erfüllt
     public void SetLevelCompleted(bool completed)
     {
         if (IsLevelTrackingEnabled)
@@ -352,7 +350,7 @@ public class SceneProgressManager : MonoBehaviour
      }
     }
 
-    //Objekt zerstören
+    // Objekt zerstören
     void OnDestroy()
     {
     if (instance == this)

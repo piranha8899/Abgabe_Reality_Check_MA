@@ -16,9 +16,9 @@ public class Speech_Texttyping : MonoBehaviour
     public List<AudioClip> audioClips;
     private AudioSource audioSource;
     public GameObject continueButton;
-    public GameObject[] additionalObjectsToShow; //Alle UI-Elemente, die angezeigt werden sollen
-    public bool startAutomatically = true; //Automatischer Start?
-    public bool playOnlyOnce = false; //Nur einmal abspielen?
+    public GameObject[] additionalObjectsToShow; // Alle UI-Elemente, die angezeigt werden sollen
+    public bool startAutomatically = true; // Automatischer Start?
+    public bool playOnlyOnce = false; // Nur einmal abspielen?
     public float startDelay = 0.5f;
     private int currentLine = 0;
     private bool isTyping = false;
@@ -91,7 +91,7 @@ public class Speech_Texttyping : MonoBehaviour
         }
     }
     
-    //Starten der Sequenz
+    // Starten der Sequenz
     private IEnumerator BeginSequence()
     {
         // Verzögerung
@@ -163,10 +163,7 @@ public class Speech_Texttyping : MonoBehaviour
         if (continueButton != null)
             continueButton.SetActive(true);
     }
-
-    
-
-    //Prüfen, ob Dialog schon gespielt wurde
+    // Prüfen, ob Dialog schon gespielt wurde
     private bool HasAlreadyPlayed()
     {
     string speechkey = GetPrefKey();
