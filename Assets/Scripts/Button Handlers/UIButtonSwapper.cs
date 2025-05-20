@@ -38,8 +38,6 @@ public class UIButtonSwapper : MonoBehaviour
             pair.onButton.onClick.AddListener(() => SwapToOff(pairIndex));
             pair.offButton.onClick.AddListener(() => SwapToOn(pairIndex));
         }
-        
-        // Level-Status prüfen
         CheckLevelCompletion();
     }
 
@@ -47,15 +45,12 @@ public class UIButtonSwapper : MonoBehaviour
     {
         if (pairIndex < 0 || pairIndex >= buttonPairs.Count)
             return;
-
-        // Zuerst alle Paare auf "off" setzen
         for (int i = 0; i < buttonPairs.Count; i++)
         {
             buttonPairs[i].onButton.gameObject.SetActive(false);
             buttonPairs[i].offButton.gameObject.SetActive(true);
         }
-        
-        // Dann das ausgewählte Paar auf on setzen
+        // Ausgewähltes paar aktivieren
         var pair = buttonPairs[pairIndex];
         pair.onButton.gameObject.SetActive(true);
         pair.offButton.gameObject.SetActive(false);

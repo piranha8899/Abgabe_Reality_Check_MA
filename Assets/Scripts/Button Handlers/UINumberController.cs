@@ -19,9 +19,9 @@ public class UINumberController : MonoBehaviour
 
     public int stepSize = 1;  // Schrittgrösse für Erhöhung/Verringerung
     
-    public int minValue = 1; // Minimumwert
+    public int minValue = 1;
     
-    public int maxValue = 100; // Maximumwert
+    public int maxValue = 100;
 
     // Start is called before the first frame update
     void Start()
@@ -78,7 +78,7 @@ public class UINumberController : MonoBehaviour
             minusButton.interactable = currentNumber > minValue;
     }
 
-    //Setzen der Schrittgrösse (Runtime)
+    // Setzen der Schrittgrösse (Runtime)
     public void SetStepSize(int newStepSize)
     {
         stepSize = Mathf.Max(1, newStepSize); // Mindestens 1

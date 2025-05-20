@@ -35,7 +35,7 @@ public class UIDashboardHandler : MonoBehaviour
         }
     }
 
-    //Overlay über einen Button Event triggern. Muss auf Button gesetzt werden.
+    // Overlay über einen Button Event triggern. Muss auf Button gesetzt werden.
     public void TriggerOverlayCheck()
     {
         StartCoroutine(OverlayCheck());
@@ -59,7 +59,7 @@ public class UIDashboardHandler : MonoBehaviour
     {
     if (SceneProgressManager.Instance.IsLevelCompleted)
         {
-        //Code für Abschlusscheck möglich
+        // Code für Abschlusscheck möglich
         }
     }
 
