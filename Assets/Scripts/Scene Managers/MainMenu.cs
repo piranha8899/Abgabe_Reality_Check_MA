@@ -44,7 +44,7 @@ public class MainMenu : MonoBehaviour
         if (settingsButton != null)
             settingsButton.onClick.AddListener(OpenSettings);
             bool anyLevelCompleted = CheckIfAnyLevelCompleted();
-            settingsButton.interactable = anyLevelCompleted; // Button nur aktivieren, wenn mindestens ein Level abgeschlossen ist
+            //settingsButton.interactable = anyLevelCompleted; // Button nur aktivieren, wenn mindestens ein Level abgeschlossen ist
             
         if (goalsButton != null)
         {
