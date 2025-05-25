@@ -11,7 +11,7 @@ public class IntroHintAnimationManager : MonoBehaviour
 
     private void Start()
     {
-        if (requiredObject != null && hintObject != null)
+        if (requiredObject != null && requiredObject.activeInHierarchy && hintObject != null)
         {
             if (hintCoroutine != null)
             {
@@ -20,16 +20,14 @@ public class IntroHintAnimationManager : MonoBehaviour
             hintCoroutine = StartCoroutine(ShowHintAfterDelay());
         }
     }
-
     private IEnumerator ShowHintAfterDelay()
     {
         yield return new WaitForSeconds(delay);
         hintObject.SetActive(true);
         hintCoroutine = null;
-    }
 
-    private void OnMouseDown()
-    {
+        //Hint wieder deaktivieren
+        yield return new WaitUntil(() => Input.GetMouseButtonDown(0));
         if(requiredObject != null && hintObject != null && hintObject.activeSelf)
         {
             hintObject.SetActive(false);
