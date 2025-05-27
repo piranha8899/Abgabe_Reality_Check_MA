@@ -81,10 +81,7 @@ public class UIDashboardHandler : MonoBehaviour
     void HideOverlay()
     {
         overlayImage.SetActive(false);
-        if(SceneProgressManager.Instance.IsLevelCompleted)
-        {
-            SceneManager.LoadScene("Panel");
-        }
+        SceneManager.LoadScene("Panel");
     }
     
 }

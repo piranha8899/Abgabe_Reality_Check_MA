@@ -64,13 +64,17 @@ public class GoalSaver : MonoBehaviour
         nextButton.onClick.AddListener(WeiterButtonClicked);
         
         if (closeOverlayButton != null)
-            closeOverlayButton.onClick.AddListener(() => SceneManager.LoadScene("MainMenu"));
+            if(Speech_Texttyping.CheckPlayed("4") == false)
+                closeOverlayButton.onClick.AddListener(() => Speech_Texttyping.StartDialog("4"));
+            else
+                closeOverlayButton.onClick.AddListener(() => SceneManager.LoadScene("MainMenu"));
             
         // Fallback-Listener einrichten
         if (fallbackBackButton != null)
         {
             fallbackBackButton.onClick.RemoveAllListeners();
-            fallbackBackButton.onClick.AddListener(() => {
+            fallbackBackButton.onClick.AddListener(() =>
+            {
                 // Overlay, Fallback und Button ausblenden
                 goalOverlayPanel.SetActive(false);
                 if (goalFallback != null)

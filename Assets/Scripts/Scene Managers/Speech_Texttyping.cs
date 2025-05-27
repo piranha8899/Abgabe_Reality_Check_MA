@@ -237,6 +237,17 @@ public class Speech_Texttyping : MonoBehaviour
         }
     }
 
+    public static bool CheckPlayed(string id)
+    {
+        if (allTypers.ContainsKey(id))
+        {
+            Speech_Texttyping typer = allTypers[id];
+            return typer.HasAlreadyPlayed();
+
+        }
+        return false;
+    }
+
     // Prüfen ob Dialog existiert
     public static bool HasDialog(string id)
     {

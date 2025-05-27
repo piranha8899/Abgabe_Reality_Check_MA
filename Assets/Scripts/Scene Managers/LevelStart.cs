@@ -7,7 +7,8 @@ using TMPro;
 public class LevelStart : MonoBehaviour
 {
 
-    [SerializeField] private TextMeshProUGUI introText;
+    [SerializeField] private List<TextMeshProUGUI> introText;
+    [SerializeField] private List<Image> introImages; // Falls Bilder im Intro verwendet werden sollen
     [SerializeField] private Image introBackgroundImage;
     [SerializeField] private float displayDuration = 3.0f;
     [SerializeField] private float fadeDuration = 1.0f;
@@ -21,7 +22,9 @@ public class LevelStart : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        if (introText == null || introBackgroundImage == null)
+        if ((introText == null || introText.Count == 0) && 
+            (introImages == null || introImages.Count == 0) && 
+            introBackgroundImage == null)
         {
             Debug.LogError("Fehlendes Intro-Element.");
             return;
@@ -88,11 +91,25 @@ public class LevelStart : MonoBehaviour
         // Text
         if (introText != null)
         {
-            Color textColor = introText.color;
-            textColor.a = alpha;
-            introText.color = textColor;
+            foreach (TextMeshProUGUI text in introText)
+            {
+                Color textColor = text.color;
+                textColor.a = alpha;
+                text.color = textColor;
+            }
         }
 
+        // Bilder
+        if (introImages != null)
+        {
+            foreach (Image image in introImages)
+            {
+                Color imgColor = image.color;
+                imgColor.a = alpha;
+                image.color = imgColor;
+            }
+        }
+        
         // Hintergrund
         if (introBackgroundImage != null)
         {
@@ -111,7 +128,17 @@ public class LevelStart : MonoBehaviour
         }
         if (introText != null)
         {
-            introText.raycastTarget = enableRaycasts;
+            foreach (TextMeshProUGUI text in introText)
+            {
+                text.raycastTarget = enableRaycasts;
+            }
+        }
+        if (introImages != null)
+        {
+            foreach (Image image in introImages)
+            {
+                image.raycastTarget = enableRaycasts;
+            }
         }
     }
 

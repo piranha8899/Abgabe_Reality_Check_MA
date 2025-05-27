@@ -42,6 +42,7 @@ public class SceneProgressManager : MonoBehaviour
         public int expectedInt;
         public float expectedFloat;
         public string expectedString;
+        public GameObject conditionCompletionObject; // Optionales GameObject, das aktiviert wird, wenn die Bedingung erfüllt ist
 
     }
     
@@ -146,17 +147,28 @@ public class SceneProgressManager : MonoBehaviour
         });
     }   
     }
+    
+    // Prüft, ob eine Bedingung erfüllt ist und aktualisiert das zugehörige GameObject
+    private void UpdateConditionCompletionObjects(LevelCondition condition, bool conditionMet)
+    {
+
+        if (condition.conditionCompletionObject != null)
+        {
+            // GameObject aktivieren oder deaktivieren, je nach Bedingungserfüllung
+            condition.conditionCompletionObject.SetActive(conditionMet);
+        }
+    }
 
     // Variablenwert speichern, Schlüsselname wird definiert
     public void SetValue(string key, object value)
     {
-    if (string.IsNullOrEmpty(key)) return;
-    
-    sceneValues[key] = value;
-    
-    // Nur prüfen wenn Level-Tracking aktiv
-    if (IsLevelTrackingEnabled)
-        CheckLevelCompletion();
+        if (string.IsNullOrEmpty(key)) return;
+
+        sceneValues[key] = value;
+
+        // Nur prüfen wenn Level-Tracking aktiv
+        if (IsLevelTrackingEnabled)
+            CheckLevelCompletion();
     }
 
     // Wert abrufen
@@ -237,17 +249,13 @@ public class SceneProgressManager : MonoBehaviour
             {
                 Debug.Log($"Fehlender Wert für Key: {condition.key}");
                 allConditionsMet = false;
+                UpdateConditionCompletionObjects(condition, false); // Completion-Objekt deaktivieren
                 continue;
             }
-
-            if (CheckCondition(condition, sceneValues[condition.key]))
-            {
-                currentCompletedCount++;
-            }
-            else
-            {
-                allConditionsMet = false;
-            }
+            bool conditionMet = CheckCondition(condition, sceneValues[condition.key]);
+            UpdateConditionCompletionObjects(condition, conditionMet); // Completion-Objekt aktualisieren
+            if (conditionMet) currentCompletedCount++;
+            else allConditionsMet = false;
         }
 
         // Prüfen, ob Fortschritt gemacht wurde
@@ -290,10 +298,7 @@ public class SceneProgressManager : MonoBehaviour
     // Setzt Completion manuell, wenn Bedingungen erfüllt
     public void SetLevelCompleted(bool completed)
     {
-        if (IsLevelTrackingEnabled)
-        {
-            IsLevelCompleted = completed;
-        }
+        if (IsLevelTrackingEnabled) IsLevelCompleted = completed;
     }
 
     public static string GetCurrentLevelIdentifier()
@@ -305,12 +310,8 @@ public class SceneProgressManager : MonoBehaviour
     {
         PlayerPrefs.SetString(CURRENT_LEVEL_KEY, identifier);
         PlayerPrefs.Save();
-    
         // Falls eine Instanz existiert, aktualisiere auch dort
-        if (Instance != null)
-        {
-        Instance.levelIdentifier = identifier;
-        }
+        if (Instance != null) Instance.levelIdentifier = identifier;
     }
 
     public void HomeButton()
@@ -353,10 +354,6 @@ public class SceneProgressManager : MonoBehaviour
     // Objekt zerstören
     void OnDestroy()
     {
-    if (instance == this)
-        {
-        instance = null;
-        }
+    if (instance == this) instance = null;
     }
-
 }

@@ -16,6 +16,7 @@ public class HintAnimation : MonoBehaviour
         public List<GameObject> blockingObjects = new List<GameObject>(); // Objekte, die den Hinweis blockieren (z.B Overlays)
         public bool isShown = false;
         public bool isDismissed = false;
+        [HideInInspector] public bool readyToShow = false; // Wird verwendet, um anzuzeigen, ob der Hinweis bereit ist, angezeigt zu werden
     }
     public List<HintConfig> availableHints = new List<HintConfig>();
     private Dictionary<string, HintConfig> hintsById = new Dictionary<string, HintConfig>();
@@ -92,7 +93,7 @@ public class HintAnimation : MonoBehaviour
                 {
                     if (hintsById.TryGetValue(requiredHintId, out HintConfig requiredHint))
                     {
-                        if (!requiredHint.isShown || !requiredHint.isDismissed)
+                        if (!requiredHint.isDismissed)
                         {
                             canShow = false;
                             break;
@@ -100,14 +101,14 @@ public class HintAnimation : MonoBehaviour
                     }
                 }
             }
-
             CheckBlockingObjects(hint, ref canShow); // Überprüfe blockierende Objekte
+            hint.readyToShow = canShow; // Setze den Status, ob der Hinweis bereit ist, angezeigt zu werden
             // Zeige den Hinweis an, wenn alle Bedingungen erfüllt sind
-            if (canShow && !hint.isShown)
+            if (canShow && !hint.isShown && !hint.isDismissed)
             {
                 yield return new WaitForSeconds(hint.delay);
                 CheckBlockingObjects(hint, ref canShow); // Überprüfe blockierende Objekte nochmals nach Delay
-                if(canShow && !hint.isShown &&systemActive && !hint.isDismissed)
+                if (canShow && !hint.isShown && systemActive && !hint.isDismissed)
                     ShowHint(hint);
             }
             yield return new WaitForSeconds(1f); // Regelmässige Überprüfung
@@ -132,21 +133,58 @@ public class HintAnimation : MonoBehaviour
     {
         // Hinweis als bestätigt markieren
         clickedHint.isDismissed = true;
-        
+        clickedHint.isShown = true;
+
         // Hinweis ausblenden
         HideHint(clickedHint);
+        CheckDependentHints(clickedHint);
     }
-    private void CheckBlockingObjects(HintConfig hint, ref bool canShow)
-    {if (canShow && hint.blockingObjects != null && hint.blockingObjects.Count > 0)
+
+    private void CheckDependentHints(HintConfig completedHint)
+    {
+        foreach (var hint in availableHints)
+        {
+            // Überspringe bereits erledigte Hinweise
+            if (hint.isDismissed || hint.isShown)
+                continue;
+            
+            // Prüfe ob dieser Hinweis von dem gerade erledigten abhängt
+            if (hint.requiredHints != null && hint.requiredHints.Length > 0)
             {
-                foreach (var blockingObject in hint.blockingObjects)
+                bool allRequirementsMet = true;
+                foreach (var requiredHintId in hint.requiredHints)
                 {
-                    if (blockingObject != null && blockingObject.activeInHierarchy)
+                    if (hintsById.TryGetValue(requiredHintId, out HintConfig requiredHint))
                     {
-                        canShow = false; // Hinweis kann nicht angezeigt werden, wenn ein blockierendes Objekt aktiv ist
-                        break;
+                        if (!requiredHint.isDismissed)
+                        {
+                            allRequirementsMet = false;
+                            break;
+                        }
                     }
                 }
+                
+                // Wenn nun alle Anforderungen erfüllt sind, Hint-Status aktualisieren
+                if (allRequirementsMet)
+                {
+                    hint.readyToShow = true;
+                }
             }
+        }
+    }
+    
+    private void CheckBlockingObjects(HintConfig hint, ref bool canShow)
+    {
+        if (canShow && hint.blockingObjects != null && hint.blockingObjects.Count > 0)
+        {
+            foreach (var blockingObject in hint.blockingObjects)
+            {
+                if (blockingObject != null && blockingObject.activeInHierarchy)
+                {
+                    canShow = false; // Hinweis kann nicht angezeigt werden, wenn ein blockierendes Objekt aktiv ist
+                    break;
+                }
+            }
+        }
     }
 }
