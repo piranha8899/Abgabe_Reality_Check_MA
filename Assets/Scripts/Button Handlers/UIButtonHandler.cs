@@ -22,6 +22,18 @@ public class UIButtonHandler : MonoBehaviour
             obj.SetActive(!isActive);
         }
     }
+
+    public void DisableAnimationOnClick(GameObject obj)
+    {
+        if (obj != null)
+        {
+            Animator animator = obj.GetComponent<Animator>();
+            if (animator != null)
+            {
+                animator.enabled = false;
+            }
+        }
+    }
     
     public void HideObject(GameObject obj)
     {
