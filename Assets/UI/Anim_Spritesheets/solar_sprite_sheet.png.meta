@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: c91734f8f16849240a57c08a4af26e47
+guid: 7f12e87a1f9aca34aba36d3b90627dbc
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -48,7 +48,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 400
+  spritePixelsToUnits: 100
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -123,7 +123,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: solar_spritesheet_0
+      name: solar_sprite_sheet_0
       rect:
         serializedVersion: 2
         x: 0
@@ -137,14 +137,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ca3389485e0a1b243b5825387e1cd6ea
-      internalID: 1946011097
+      spriteID: deea76fbea2f4364f89db9db45feea9e
+      internalID: -231723216
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: solar_spritesheet_1
+      name: solar_sprite_sheet_1
       rect:
         serializedVersion: 2
         x: 400
@@ -158,14 +158,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 44830dbe4695a5c42af87d8c7974d549
-      internalID: 1022542941
+      spriteID: a18d9777e0081234e90da211f75f0a7c
+      internalID: -135641355
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: solar_spritesheet_2
+      name: solar_sprite_sheet_2
       rect:
         serializedVersion: 2
         x: 800
@@ -179,14 +179,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c9cf970e43393f148838cabd84035951
-      internalID: -1063446280
+      spriteID: d6e90bf403388204d8db735fe7b5dbaf
+      internalID: -919623754
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: solar_spritesheet_3
+      name: solar_sprite_sheet_3
       rect:
         serializedVersion: 2
         x: 1200
@@ -200,14 +200,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 8663db24a3d9e2b4c8bb692df7a9731f
-      internalID: 1842476017
+      spriteID: 168e245054d6dd74381fbf7021dabf15
+      internalID: 1673496221
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: solar_spritesheet_4
+      name: solar_sprite_sheet_4
       rect:
         serializedVersion: 2
         x: 1600
@@ -221,14 +221,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 9b457ca9417771a4a967c840bff16fea
-      internalID: -419761280
+      spriteID: 7a72fa4c9965da849b4f1b544d577f50
+      internalID: 1077543987
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: solar_spritesheet_5
+      name: solar_sprite_sheet_5
       rect:
         serializedVersion: 2
         x: 2000
@@ -242,14 +242,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ddb0a569d5638f34ab07427e03988de3
-      internalID: 284886630
+      spriteID: ec6783fea601ddc48a25fba8a816f33c
+      internalID: 224459902
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: solar_spritesheet_6
+      name: solar_sprite_sheet_6
       rect:
         serializedVersion: 2
         x: 0
@@ -263,14 +263,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 8d45a539bc6d5c245a68a76a129f7b69
-      internalID: -165352405
+      spriteID: 17bc3cc19d48bc645bb8402fb2691f39
+      internalID: 1715502342
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: solar_spritesheet_7
+      name: solar_sprite_sheet_7
       rect:
         serializedVersion: 2
         x: 400
@@ -284,14 +284,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 1db43ef449b96a94da21566b739d3ac9
-      internalID: -1948680753
+      spriteID: 478809f5c2647ea49b4250931f930b62
+      internalID: 998348332
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: solar_spritesheet_8
+      name: solar_sprite_sheet_8
       rect:
         serializedVersion: 2
         x: 800
@@ -305,14 +305,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e0164c6b925cdc649a0b3f21f5dcc934
-      internalID: -1828467795
+      spriteID: 34e8394fd7fd90e488a439c2184cf8cf
+      internalID: 2053792019
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: solar_spritesheet_9
+      name: solar_sprite_sheet_9
       rect:
         serializedVersion: 2
         x: 1200
@@ -326,14 +326,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: aaef80f9559204c499773d9f637e7b6c
-      internalID: -377949860
+      spriteID: 3f290ba73d9417145acb3f0a8b02ed20
+      internalID: 1293645157
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: solar_spritesheet_10
+      name: solar_sprite_sheet_10
       rect:
         serializedVersion: 2
         x: 1600
@@ -347,14 +347,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 0925070b0528cb44ca40d54fd332f1d7
-      internalID: 1555151489
+      spriteID: 6590a343913641d45a3ef90000f74bf8
+      internalID: -640431706
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: solar_spritesheet_11
+      name: solar_sprite_sheet_11
       rect:
         serializedVersion: 2
         x: 2000
@@ -368,14 +368,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 1743ef885737a7d4bab441739416dad7
-      internalID: -1434379794
+      spriteID: 411a59cad5d6a0349a61923f1edf7886
+      internalID: 132958813
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: solar_spritesheet_12
+      name: solar_sprite_sheet_12
       rect:
         serializedVersion: 2
         x: 0
@@ -389,14 +389,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 736ed4ace299a924c8bf1ccb3a06c5db
-      internalID: -831703446
+      spriteID: 71b8d81dd90fb044d92eda14d3a4d8fd
+      internalID: -1652558982
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: solar_spritesheet_13
+      name: solar_sprite_sheet_13
       rect:
         serializedVersion: 2
         x: 400
@@ -410,14 +410,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 823b3e3b601205b4d9704bf5ef99bd82
-      internalID: -723111599
+      spriteID: 7ea52811178911a4abb188870d2fdebd
+      internalID: 1414798792
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: solar_spritesheet_14
+      name: solar_sprite_sheet_14
       rect:
         serializedVersion: 2
         x: 800
@@ -431,14 +431,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 82094a1037ce93c418788b3f37745159
-      internalID: -678865835
+      spriteID: b0add873d87fa6542b45b77df0bfa9e0
+      internalID: 957560839
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: solar_spritesheet_15
+      name: solar_sprite_sheet_15
       rect:
         serializedVersion: 2
         x: 1200
@@ -452,14 +452,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: fd21f49c5f2854f449c6f5a876c10f9c
-      internalID: 1561604181
+      spriteID: 4775a0a1d2a500542972869e37368e30
+      internalID: 65059592
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: solar_spritesheet_16
+      name: solar_sprite_sheet_16
       rect:
         serializedVersion: 2
         x: 1600
@@ -473,14 +473,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 0a374e40fe4c82b4f94949607bb4ff1f
-      internalID: -1032704421
+      spriteID: f5a456401e0fdae4ca52771c8174f695
+      internalID: 1673713270
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: solar_spritesheet_17
+      name: solar_sprite_sheet_17
       rect:
         serializedVersion: 2
         x: 2000
@@ -494,14 +494,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a3fb3dad2c20d53459a2d808701c87d8
-      internalID: -357514202
+      spriteID: e94ed1f9ce254ca49bdadf3d58a07386
+      internalID: -1699157094
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: solar_spritesheet_18
+      name: solar_sprite_sheet_18
       rect:
         serializedVersion: 2
         x: 0
@@ -515,14 +515,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 80f804b130258154eb8b2e0459ab4d0b
-      internalID: 356012296
+      spriteID: 0bd7f103296f1bd4a99555dba3de0814
+      internalID: 559318746
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: solar_spritesheet_19
+      name: solar_sprite_sheet_19
       rect:
         serializedVersion: 2
         x: 400
@@ -536,14 +536,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 1d581f713e860024ebc223d2fdd10fde
-      internalID: -379341913
+      spriteID: b11b00675e49e704f9be70e8ba6bfe95
+      internalID: -630413406
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: solar_spritesheet_20
+      name: solar_sprite_sheet_20
       rect:
         serializedVersion: 2
         x: 800
@@ -557,14 +557,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 8fc9651e4f121fd4bba99fea621bea5c
-      internalID: 1122666429
+      spriteID: 525a9666ab31529418a8c712e1986a9c
+      internalID: 1538425240
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: solar_spritesheet_21
+      name: solar_sprite_sheet_21
       rect:
         serializedVersion: 2
         x: 1200
@@ -578,14 +578,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 4c6a1cc96c496ef42bedf6f36f9b36e8
-      internalID: 1655569198
+      spriteID: 583611781319ad54c86c5c92d5eb9b93
+      internalID: -921328047
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: solar_spritesheet_22
+      name: solar_sprite_sheet_22
       rect:
         serializedVersion: 2
         x: 1600
@@ -599,14 +599,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d6c9907e5809efa4eade7441cefa7d4b
-      internalID: -278122266
+      spriteID: df9fcb4a08ff6414ea7d23d10c0e0435
+      internalID: 1160211311
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: solar_spritesheet_23
+      name: solar_sprite_sheet_23
       rect:
         serializedVersion: 2
         x: 2000
@@ -620,14 +620,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 6681e0be8a0198440bceec4516a253f0
-      internalID: -411637241
+      spriteID: ef2068ad71ee2d943800a962c5548576
+      internalID: 1384833914
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: solar_spritesheet_24
+      name: solar_sprite_sheet_24
       rect:
         serializedVersion: 2
         x: 0
@@ -641,14 +641,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b7d3ce43681458e4693e362bfec07771
-      internalID: 1484817720
+      spriteID: a2d320680e3083946bfdf7a05830f51a
+      internalID: 782122745
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: solar_spritesheet_25
+      name: solar_sprite_sheet_25
       rect:
         serializedVersion: 2
         x: 400
@@ -662,14 +662,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 7dcb5c846e24de943a0321a23aa3417c
-      internalID: -2021048799
+      spriteID: c7b20d4e2a3484a469ba2942a0825f2b
+      internalID: 1497185418
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: solar_spritesheet_26
+      name: solar_sprite_sheet_26
       rect:
         serializedVersion: 2
         x: 800
@@ -683,14 +683,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 7a186c560cb26ae4aaaad98dd95e6371
-      internalID: 2057400012
+      spriteID: 5e20437695890d045ac00845e98541a2
+      internalID: 1721354375
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: solar_spritesheet_27
+      name: solar_sprite_sheet_27
       rect:
         serializedVersion: 2
         x: 1200
@@ -704,14 +704,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 32200ac085560cc47ba46b9113ef0748
-      internalID: -1147776155
+      spriteID: 0efd1438da9f3f547886b2fe15aef233
+      internalID: 404193479
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: solar_spritesheet_28
+      name: solar_sprite_sheet_28
       rect:
         serializedVersion: 2
         x: 1600
@@ -725,14 +725,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 934962a03e83e704ea819f8f807c347a
-      internalID: 581604584
+      spriteID: e358b8e809b6117429a8fc3f96e56464
+      internalID: -493373739
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: solar_spritesheet_29
+      name: solar_sprite_sheet_29
       rect:
         serializedVersion: 2
         x: 2000
@@ -746,8 +746,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 1e68053a25d489347aa738d8a96b7111
-      internalID: 569089054
+      spriteID: ac9ad87f3ceb7d548927c38de57f7911
+      internalID: 534388303
       vertices: []
       indices: 
       edges: []
@@ -763,36 +763,36 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      solar_spritesheet_0: 1946011097
-      solar_spritesheet_1: 1022542941
-      solar_spritesheet_10: 1555151489
-      solar_spritesheet_11: -1434379794
-      solar_spritesheet_12: -831703446
-      solar_spritesheet_13: -723111599
-      solar_spritesheet_14: -678865835
-      solar_spritesheet_15: 1561604181
-      solar_spritesheet_16: -1032704421
-      solar_spritesheet_17: -357514202
-      solar_spritesheet_18: 356012296
-      solar_spritesheet_19: -379341913
-      solar_spritesheet_2: -1063446280
-      solar_spritesheet_20: 1122666429
-      solar_spritesheet_21: 1655569198
-      solar_spritesheet_22: -278122266
-      solar_spritesheet_23: -411637241
-      solar_spritesheet_24: 1484817720
-      solar_spritesheet_25: -2021048799
-      solar_spritesheet_26: 2057400012
-      solar_spritesheet_27: -1147776155
-      solar_spritesheet_28: 581604584
-      solar_spritesheet_29: 569089054
-      solar_spritesheet_3: 1842476017
-      solar_spritesheet_4: -419761280
-      solar_spritesheet_5: 284886630
-      solar_spritesheet_6: -165352405
-      solar_spritesheet_7: -1948680753
-      solar_spritesheet_8: -1828467795
-      solar_spritesheet_9: -377949860
+      solar_sprite_sheet_0: -231723216
+      solar_sprite_sheet_1: -135641355
+      solar_sprite_sheet_10: -640431706
+      solar_sprite_sheet_11: 132958813
+      solar_sprite_sheet_12: -1652558982
+      solar_sprite_sheet_13: 1414798792
+      solar_sprite_sheet_14: 957560839
+      solar_sprite_sheet_15: 65059592
+      solar_sprite_sheet_16: 1673713270
+      solar_sprite_sheet_17: -1699157094
+      solar_sprite_sheet_18: 559318746
+      solar_sprite_sheet_19: -630413406
+      solar_sprite_sheet_2: -919623754
+      solar_sprite_sheet_20: 1538425240
+      solar_sprite_sheet_21: -921328047
+      solar_sprite_sheet_22: 1160211311
+      solar_sprite_sheet_23: 1384833914
+      solar_sprite_sheet_24: 782122745
+      solar_sprite_sheet_25: 1497185418
+      solar_sprite_sheet_26: 1721354375
+      solar_sprite_sheet_27: 404193479
+      solar_sprite_sheet_28: -493373739
+      solar_sprite_sheet_29: 534388303
+      solar_sprite_sheet_3: 1673496221
+      solar_sprite_sheet_4: 1077543987
+      solar_sprite_sheet_5: 224459902
+      solar_sprite_sheet_6: 1715502342
+      solar_sprite_sheet_7: 998348332
+      solar_sprite_sheet_8: 2053792019
+      solar_sprite_sheet_9: 1293645157
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
