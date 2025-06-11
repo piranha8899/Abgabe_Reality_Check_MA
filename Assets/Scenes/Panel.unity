@@ -5527,12 +5527,12 @@ PrefabInstance:
     - target: {fileID: 4256781481779919100, guid: d67b28be5efff794bbfb19cb1824a980,
         type: 3}
       propertyPath: m_Pivot.x
-      value: 0.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4256781481779919100, guid: d67b28be5efff794bbfb19cb1824a980,
         type: 3}
       propertyPath: m_Pivot.y
-      value: 0.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4256781481779919100, guid: d67b28be5efff794bbfb19cb1824a980,
         type: 3}
@@ -5602,12 +5602,12 @@ PrefabInstance:
     - target: {fileID: 4256781481779919100, guid: d67b28be5efff794bbfb19cb1824a980,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -93.102295
+      value: -459.53735
       objectReference: {fileID: 0}
     - target: {fileID: 4256781481779919100, guid: d67b28be5efff794bbfb19cb1824a980,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 41.44922
+      value: -362.58533
       objectReference: {fileID: 0}
     - target: {fileID: 4256781481779919100, guid: d67b28be5efff794bbfb19cb1824a980,
         type: 3}
@@ -7265,6 +7265,41 @@ PrefabInstance:
         type: 3}
       propertyPath: startAutomatically
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9087063587474315800, guid: 6dfd9209ef3572447a91db7ccbdc735c,
+        type: 3}
+      propertyPath: textLines.Array.size
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 9087063587474315800, guid: 6dfd9209ef3572447a91db7ccbdc735c,
+        type: 3}
+      propertyPath: textLines.Array.data[0]
+      value: Hallo! Gut, dass du da bist.
+      objectReference: {fileID: 0}
+    - target: {fileID: 9087063587474315800, guid: 6dfd9209ef3572447a91db7ccbdc735c,
+        type: 3}
+      propertyPath: textLines.Array.data[1]
+      value: "Ich habe n\xE4mlich ein Problem."
+      objectReference: {fileID: 0}
+    - target: {fileID: 9087063587474315800, guid: 6dfd9209ef3572447a91db7ccbdc735c,
+        type: 3}
+      propertyPath: textLines.Array.data[3]
+      value: die Haushalte zu viel Strom verbrauchen.
+      objectReference: {fileID: 0}
+    - target: {fileID: 9087063587474315800, guid: 6dfd9209ef3572447a91db7ccbdc735c,
+        type: 3}
+      propertyPath: textLines.Array.data[4]
+      value: "Der Energiepark k\xF6nnte viel mehr Haushalte versorgen."
+      objectReference: {fileID: 0}
+    - target: {fileID: 9087063587474315800, guid: 6dfd9209ef3572447a91db7ccbdc735c,
+        type: 3}
+      propertyPath: textLines.Array.data[5]
+      value: Kannst du mir helfen?
+      objectReference: {fileID: 0}
+    - target: {fileID: 9087063587474315800, guid: 6dfd9209ef3572447a91db7ccbdc735c,
+        type: 3}
+      propertyPath: textLines.Array.data[6]
+      value: Finde alle Stromfresser und erhalte 100 Energiepunkte.
       objectReference: {fileID: 0}
     - target: {fileID: 9087063587474315800, guid: 6dfd9209ef3572447a91db7ccbdc735c,
         type: 3}
