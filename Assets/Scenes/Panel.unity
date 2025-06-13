@@ -1126,6 +1126,46 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1756941877}
     m_Modifications:
+    - target: {fileID: 2657410755656698456, guid: 8d605b140c4624f449cd87663f850fc2,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2657410755656698456, guid: 8d605b140c4624f449cd87663f850fc2,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2657410755656698456, guid: 8d605b140c4624f449cd87663f850fc2,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1370636040}
+    - target: {fileID: 2657410755656698456, guid: 8d605b140c4624f449cd87663f850fc2,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2657410755656698456, guid: 8d605b140c4624f449cd87663f850fc2,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: LoadScene
+      objectReference: {fileID: 0}
+    - target: {fileID: 2657410755656698456, guid: 8d605b140c4624f449cd87663f850fc2,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: PanelHandler, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 2657410755656698456, guid: 8d605b140c4624f449cd87663f850fc2,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_StringArgument
+      value: Completion_Goals
+      objectReference: {fileID: 0}
+    - target: {fileID: 2657410755656698456, guid: 8d605b140c4624f449cd87663f850fc2,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 3500271703569341667, guid: 8d605b140c4624f449cd87663f850fc2,
         type: 3}
       propertyPath: m_Sprite
@@ -1218,7 +1258,8 @@ PrefabInstance:
       propertyPath: selectedCategory
       value: 1
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 4526208681158764929, guid: 8d605b140c4624f449cd87663f850fc2, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
