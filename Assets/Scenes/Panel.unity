@@ -1841,8 +1841,13 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9087063587474315800, guid: 6dfd9209ef3572447a91db7ccbdc735c,
         type: 3}
+      propertyPath: audioClips.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 9087063587474315800, guid: 6dfd9209ef3572447a91db7ccbdc735c,
+        type: 3}
       propertyPath: textLines.Array.data[0]
-      value: Geschafft! Das Energienetz stabilisert sich!
+      value: Geschafft! Das Energienetz stabilisiert sich!
       objectReference: {fileID: 0}
     - target: {fileID: 9087063587474315800, guid: 6dfd9209ef3572447a91db7ccbdc735c,
         type: 3}
@@ -1859,6 +1864,26 @@ PrefabInstance:
       propertyPath: textLines.Array.data[3]
       value: "Schau dir an, wieviel Strom du insgesamt sparen k\xF6nntest."
       objectReference: {fileID: 0}
+    - target: {fileID: 9087063587474315800, guid: 6dfd9209ef3572447a91db7ccbdc735c,
+        type: 3}
+      propertyPath: audioClips.Array.data[0]
+      value: 
+      objectReference: {fileID: 8300000, guid: 1489cdd411b52594687804f067fb1d0f, type: 3}
+    - target: {fileID: 9087063587474315800, guid: 6dfd9209ef3572447a91db7ccbdc735c,
+        type: 3}
+      propertyPath: audioClips.Array.data[1]
+      value: 
+      objectReference: {fileID: 8300000, guid: 2adebc03f6eb06945b4be32387fd82c4, type: 3}
+    - target: {fileID: 9087063587474315800, guid: 6dfd9209ef3572447a91db7ccbdc735c,
+        type: 3}
+      propertyPath: audioClips.Array.data[2]
+      value: 
+      objectReference: {fileID: 8300000, guid: e03a0df8cf72a96449dfda9ab9b16cc7, type: 3}
+    - target: {fileID: 9087063587474315800, guid: 6dfd9209ef3572447a91db7ccbdc735c,
+        type: 3}
+      propertyPath: audioClips.Array.data[3]
+      value: 
+      objectReference: {fileID: 8300000, guid: dd1dcc3c9fde62041a0f5fac0b2db3bf, type: 3}
     - target: {fileID: 9087063587474315800, guid: 6dfd9209ef3572447a91db7ccbdc735c,
         type: 3}
       propertyPath: additionalObjectsToShow.Array.size
@@ -4649,6 +4674,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9087063587474315800, guid: 6dfd9209ef3572447a91db7ccbdc735c,
         type: 3}
+      propertyPath: audioClips.Array.size
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 9087063587474315800, guid: 6dfd9209ef3572447a91db7ccbdc735c,
+        type: 3}
       propertyPath: textLines.Array.data[0]
       value: Hallo! Gut, dass du da bist.
       objectReference: {fileID: 0}
@@ -4677,6 +4707,41 @@ PrefabInstance:
       propertyPath: textLines.Array.data[6]
       value: Finde alle Stromfresser und erhalte 100 Energiepunkte.
       objectReference: {fileID: 0}
+    - target: {fileID: 9087063587474315800, guid: 6dfd9209ef3572447a91db7ccbdc735c,
+        type: 3}
+      propertyPath: audioClips.Array.data[0]
+      value: 
+      objectReference: {fileID: 8300000, guid: d768b175252419e4a911b5741b038781, type: 3}
+    - target: {fileID: 9087063587474315800, guid: 6dfd9209ef3572447a91db7ccbdc735c,
+        type: 3}
+      propertyPath: audioClips.Array.data[1]
+      value: 
+      objectReference: {fileID: 8300000, guid: 316203d0c3dc0a3449687d3eb0759919, type: 3}
+    - target: {fileID: 9087063587474315800, guid: 6dfd9209ef3572447a91db7ccbdc735c,
+        type: 3}
+      propertyPath: audioClips.Array.data[2]
+      value: 
+      objectReference: {fileID: 8300000, guid: 150528a33d4d9d44d84d3cb0dc8b8205, type: 3}
+    - target: {fileID: 9087063587474315800, guid: 6dfd9209ef3572447a91db7ccbdc735c,
+        type: 3}
+      propertyPath: audioClips.Array.data[3]
+      value: 
+      objectReference: {fileID: 8300000, guid: ca79f321a0e52eb42a4c1258a19a8890, type: 3}
+    - target: {fileID: 9087063587474315800, guid: 6dfd9209ef3572447a91db7ccbdc735c,
+        type: 3}
+      propertyPath: audioClips.Array.data[4]
+      value: 
+      objectReference: {fileID: 8300000, guid: e441faad5fb66bf438f248cfcf50dfa9, type: 3}
+    - target: {fileID: 9087063587474315800, guid: 6dfd9209ef3572447a91db7ccbdc735c,
+        type: 3}
+      propertyPath: audioClips.Array.data[5]
+      value: 
+      objectReference: {fileID: 8300000, guid: 34209a23f78365d47a2ead72d0027eab, type: 3}
+    - target: {fileID: 9087063587474315800, guid: 6dfd9209ef3572447a91db7ccbdc735c,
+        type: 3}
+      propertyPath: audioClips.Array.data[6]
+      value: 
+      objectReference: {fileID: 8300000, guid: c6bb9345045b7494cbd8b223044bae06, type: 3}
     - target: {fileID: 9087063587474315800, guid: 6dfd9209ef3572447a91db7ccbdc735c,
         type: 3}
       propertyPath: additionalObjectsToShow.Array.size

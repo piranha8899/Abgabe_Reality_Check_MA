@@ -1910,6 +1910,7 @@ GameObject:
   - component: {fileID: 1088980000}
   - component: {fileID: 1088979999}
   - component: {fileID: 1088979998}
+  - component: {fileID: 1088980002}
   m_Layer: 0
   m_Name: Pixel Perfect Camera
   m_TagString: Untagged
@@ -2051,6 +2052,14 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!81 &1088980002
+AudioListener:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1088979997}
+  m_Enabled: 1
 --- !u!1 &1106279338 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5099696290932360723, guid: 329945e75973f314ba8b7a0d9fe20df2,
@@ -3067,6 +3076,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9087063587474315800, guid: 6dfd9209ef3572447a91db7ccbdc735c,
         type: 3}
+      propertyPath: audioClips.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 9087063587474315800, guid: 6dfd9209ef3572447a91db7ccbdc735c,
+        type: 3}
       propertyPath: textLines.Array.data[0]
       value: "Stromsparen im Haushalt kann ganz sch\xF6n effektiv sein!"
       objectReference: {fileID: 0}
@@ -3085,6 +3099,26 @@ PrefabInstance:
       propertyPath: textLines.Array.data[3]
       value: ...wenn es auch langfristig umgesetzt wird!
       objectReference: {fileID: 0}
+    - target: {fileID: 9087063587474315800, guid: 6dfd9209ef3572447a91db7ccbdc735c,
+        type: 3}
+      propertyPath: audioClips.Array.data[0]
+      value: 
+      objectReference: {fileID: 8300000, guid: d4f4191fd6c900a4c8ce44b04ecf4414, type: 3}
+    - target: {fileID: 9087063587474315800, guid: 6dfd9209ef3572447a91db7ccbdc735c,
+        type: 3}
+      propertyPath: audioClips.Array.data[1]
+      value: 
+      objectReference: {fileID: 8300000, guid: 2a1296570cdf34a4fa4bfb05bc5bc1f2, type: 3}
+    - target: {fileID: 9087063587474315800, guid: 6dfd9209ef3572447a91db7ccbdc735c,
+        type: 3}
+      propertyPath: audioClips.Array.data[2]
+      value: 
+      objectReference: {fileID: 8300000, guid: 5e61daa8d618a1d489a7ba7060fd38a7, type: 3}
+    - target: {fileID: 9087063587474315800, guid: 6dfd9209ef3572447a91db7ccbdc735c,
+        type: 3}
+      propertyPath: audioClips.Array.data[3]
+      value: 
+      objectReference: {fileID: 8300000, guid: 7c007244082a5424eac2f125d76dbb9f, type: 3}
     - target: {fileID: 9087063587474315800, guid: 6dfd9209ef3572447a91db7ccbdc735c,
         type: 3}
       propertyPath: additionalObjectsToShow.Array.size
@@ -4505,6 +4539,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9087063587474315800, guid: 6dfd9209ef3572447a91db7ccbdc735c,
         type: 3}
+      propertyPath: audioClips.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 9087063587474315800, guid: 6dfd9209ef3572447a91db7ccbdc735c,
+        type: 3}
       propertyPath: textLines.Array.data[0]
       value: Toll! Du hast es geschafft.
       objectReference: {fileID: 0}
@@ -4523,6 +4562,26 @@ PrefabInstance:
       propertyPath: textLines.Array.data[3]
       value: "Daf\xFCr erh\xE4ltst du noch ein kleines Geschenk von mir."
       objectReference: {fileID: 0}
+    - target: {fileID: 9087063587474315800, guid: 6dfd9209ef3572447a91db7ccbdc735c,
+        type: 3}
+      propertyPath: audioClips.Array.data[0]
+      value: 
+      objectReference: {fileID: 8300000, guid: 669ad50c9ff898a44acaee37dd594582, type: 3}
+    - target: {fileID: 9087063587474315800, guid: 6dfd9209ef3572447a91db7ccbdc735c,
+        type: 3}
+      propertyPath: audioClips.Array.data[1]
+      value: 
+      objectReference: {fileID: 8300000, guid: 218e2a4d36bf4bf469e3b2f49ea9450c, type: 3}
+    - target: {fileID: 9087063587474315800, guid: 6dfd9209ef3572447a91db7ccbdc735c,
+        type: 3}
+      propertyPath: audioClips.Array.data[2]
+      value: 
+      objectReference: {fileID: 8300000, guid: 66e1e55978d6eeb43911a0fbba5e0875, type: 3}
+    - target: {fileID: 9087063587474315800, guid: 6dfd9209ef3572447a91db7ccbdc735c,
+        type: 3}
+      propertyPath: audioClips.Array.data[3]
+      value: 
+      objectReference: {fileID: 8300000, guid: 291cc7f56f02bc64cbc32d4266da5e9a, type: 3}
     - target: {fileID: 9087063587474315800, guid: 6dfd9209ef3572447a91db7ccbdc735c,
         type: 3}
       propertyPath: additionalObjectsToShow.Array.size
