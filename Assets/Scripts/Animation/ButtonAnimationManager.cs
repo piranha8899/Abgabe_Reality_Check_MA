@@ -14,6 +14,13 @@ public class ButtonAnimationManager : MonoBehaviour
     [Header("Animation Default")]
     public float duration = 0.1f;
 
+    [Header("Audio Settings")]
+    public AudioClip buttonClickSound;
+    [Range(0f, 1f)]
+    public float clickVolume = 1f;
+    
+    private AudioSource audioSource;
+
     //Verwaltete Buttons mit aktiven Overlays
     private Dictionary<Button, GameObject> managedButtons = new Dictionary<Button, GameObject>();
     private bool sceneLoad = false; // Flag für Szenenwechsel
@@ -32,6 +39,15 @@ public class ButtonAnimationManager : MonoBehaviour
         {
             Instance = this;
             DontDestroyOnLoad(gameObject);
+
+            // AudioSource für Button-Clicks hinzufügen
+            audioSource = GetComponent<AudioSource>();
+            if (audioSource == null)
+            {
+                audioSource = gameObject.AddComponent<AudioSource>();
+            }
+            audioSource.playOnAwake = false;
+
             SceneManager.sceneLoaded += OnSceneLoaded;
             ScanForAnimatedButtons();
         }
@@ -127,6 +143,8 @@ public class ButtonAnimationManager : MonoBehaviour
         overlayButton.onClick.AddListener(() => {
             if (button.interactable)
             {
+                // Audio abspielen
+                PlayButtonClickSound();
                 DOTween.Sequence() // Braucht DOTween Plugin
                     .Append(targetImage.DOColor(animatedButton.pressedColor, duration))
                     .Join(button.transform.DOScale(originalScale * animatedButton.pressedScale, duration))
@@ -142,6 +160,14 @@ public class ButtonAnimationManager : MonoBehaviour
         managedButtons[button] = overlay;
     }
     
+    private void PlayButtonClickSound()
+    {
+        if (buttonClickSound != null && audioSource != null)
+        {
+            audioSource.PlayOneShot(buttonClickSound, clickVolume);
+        }
+    }
+    
     // Wenn ein Button gelöscht oder deaktiviert wird
     private void OnDestroy()
     {
@@ -152,7 +178,7 @@ public class ButtonAnimationManager : MonoBehaviour
             if (overlayObj != null)
                 Destroy(overlayObj);
         }
-        
+
         managedButtons.Clear();
         DOTween.KillAll();
     }

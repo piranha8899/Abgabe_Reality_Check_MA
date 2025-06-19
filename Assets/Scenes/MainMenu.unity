@@ -406,6 +406,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   duration: 0.08
+  buttonClickSound: {fileID: 8300000, guid: 2cca015e0fb02f641883690bf9684413, type: 3}
+  clickVolume: 1
 --- !u!4 &157220276
 Transform:
   m_ObjectHideFlags: 0
