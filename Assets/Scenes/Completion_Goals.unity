@@ -2935,17 +2935,17 @@ PrefabInstance:
     - target: {fileID: 243080687024492645, guid: 6dfd9209ef3572447a91db7ccbdc735c,
         type: 3}
       propertyPath: m_SizeDelta.x
-      value: 0
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 243080687024492645, guid: 6dfd9209ef3572447a91db7ccbdc735c,
         type: 3}
       propertyPath: m_SizeDelta.y
-      value: 5.1676025
+      value: 5.1676
       objectReference: {fileID: 0}
     - target: {fileID: 243080687024492645, guid: 6dfd9209ef3572447a91db7ccbdc735c,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 243080687024492645, guid: 6dfd9209ef3572447a91db7ccbdc735c,
         type: 3}
@@ -2975,7 +2975,7 @@ PrefabInstance:
     - target: {fileID: 498203710217071405, guid: 6dfd9209ef3572447a91db7ccbdc735c,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0.0000070333
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 498203710217071405, guid: 6dfd9209ef3572447a91db7ccbdc735c,
         type: 3}
@@ -3100,7 +3100,7 @@ PrefabInstance:
     - target: {fileID: 8313688613634951065, guid: 6dfd9209ef3572447a91db7ccbdc735c,
         type: 3}
       propertyPath: m_Pivot.x
-      value: 0.49999994
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 8313688613634951065, guid: 6dfd9209ef3572447a91db7ccbdc735c,
         type: 3}
@@ -4386,7 +4386,7 @@ MonoBehaviour:
   toggleDisplayNames:
   - "Backofen: Umluft nutzen, vorheizen nur wenn n\xF6tig"
   - "Geschirrsp\xFCler: Eco-Modus und f\xFCllen"
-  - "K\xFChl- und Gefrierschrank: Richtig einstellen"
+  - "K\xFChl- / Gefrierschrank: Richtig einstellen (7\xB0C/-18\xB0C)"
   nextButton: {fileID: 1106279340}
   goalOverlayPanel: {fileID: 873983806}
   listContainer: {fileID: 1921557153}
@@ -4431,22 +4431,22 @@ PrefabInstance:
     - target: {fileID: 243080687024492645, guid: 6dfd9209ef3572447a91db7ccbdc735c,
         type: 3}
       propertyPath: m_SizeDelta.x
-      value: 0
+      value: 888.6873
       objectReference: {fileID: 0}
     - target: {fileID: 243080687024492645, guid: 6dfd9209ef3572447a91db7ccbdc735c,
         type: 3}
       propertyPath: m_SizeDelta.y
-      value: 5.1676025
+      value: 530.9357
       objectReference: {fileID: 0}
     - target: {fileID: 243080687024492645, guid: 6dfd9209ef3572447a91db7ccbdc735c,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: -30.2433
       objectReference: {fileID: 0}
     - target: {fileID: 243080687024492645, guid: 6dfd9209ef3572447a91db7ccbdc735c,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: 34.8961
       objectReference: {fileID: 0}
     - target: {fileID: 498203710217071405, guid: 6dfd9209ef3572447a91db7ccbdc735c,
         type: 3}
@@ -5569,12 +5569,12 @@ PrefabInstance:
     - target: {fileID: 3374283178856956317, guid: 066a4c82a75435d45beb0b692163c8b7,
         type: 3}
       propertyPath: m_SizeDelta.x
-      value: 2500
+      value: 3196.8809
       objectReference: {fileID: 0}
     - target: {fileID: 3374283178856956317, guid: 066a4c82a75435d45beb0b692163c8b7,
         type: 3}
       propertyPath: m_SizeDelta.y
-      value: 1500
+      value: 2235.1445
       objectReference: {fileID: 0}
     - target: {fileID: 3374283178856956317, guid: 066a4c82a75435d45beb0b692163c8b7,
         type: 3}
@@ -5614,12 +5614,12 @@ PrefabInstance:
     - target: {fileID: 3374283178856956317, guid: 066a4c82a75435d45beb0b692163c8b7,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -43
+      value: -102.96576
       objectReference: {fileID: 0}
     - target: {fileID: 3374283178856956317, guid: 066a4c82a75435d45beb0b692163c8b7,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -99
+      value: -80.38867
       objectReference: {fileID: 0}
     - target: {fileID: 3374283178856956317, guid: 066a4c82a75435d45beb0b692163c8b7,
         type: 3}

@@ -14,6 +14,7 @@ public class LevelStart : MonoBehaviour
     [SerializeField] private float fadeDuration = 1.0f;
     [SerializeField] private Button instructionButton;
     [SerializeField] private GameObject completionOverlay; // Referenz auf das Overlay-Objekt
+    [SerializeField] private AudioSource audioSource; // Audioquelle für Speech
 
     private bool isCoroutineRunning = false;
 
@@ -60,6 +61,12 @@ public class LevelStart : MonoBehaviour
             isCoroutineRunning = true;
 
             SetRaycasts(true);
+
+            // Audio abspielen, falls vorhanden
+            if (audioSource != null && !audioSource.isPlaying)
+            {
+                audioSource.Play();
+            }
             //Einblenden
             yield return StartCoroutine(FadeUI(0f, 1f, fadeDuration));
             // Warte für die eingestellte Zeit
