@@ -16,6 +16,7 @@ public class GoalSaver : MonoBehaviour
     [SerializeField] private Button closeOverlayButton;
     [SerializeField] private GameObject goalFallback;
     [SerializeField] private Button fallbackBackButton;
+    [SerializeField] private Animator badgeAnimator;
 
     private void Start()
     {
@@ -132,12 +133,12 @@ public class GoalSaver : MonoBehaviour
             if (goalFallback != null)
             {
                 goalFallback.SetActive(true);
-                
+
                 // Fallback zum Container hinzufügen
                 if (goalFallback.transform.parent != listContainer)
                     goalFallback.transform.SetParent(listContainer, false);
             }
-            
+
             //Fallback-Button anzeigen
             if (fallbackBackButton != null)
                 fallbackBackButton.gameObject.SetActive(true);
@@ -147,9 +148,15 @@ public class GoalSaver : MonoBehaviour
             // Wenn Toggles ausgewählt sind, Fallback und Button ausblenden
             if (goalFallback != null)
                 goalFallback.SetActive(false);
-                
+
             if (fallbackBackButton != null)
                 fallbackBackButton.gameObject.SetActive(false);
+
+            // Badge-Animation abspielen
+            if (badgeAnimator != null)
+            {
+                badgeAnimator.SetTrigger("badge_trigger");
+            }
         }
     }
     
