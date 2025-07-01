@@ -12,11 +12,11 @@ public class DashboardNumberController : MonoBehaviour
     public Button greenButton;
     
     [Header("Dashboard Texts")]
-    public TextMeshProUGUI kwhText;           // 600 (Hauptwert)
+    public TextMeshProUGUI kwhText;           // 600 (Hauptwert links oben)
     public TextMeshProUGUI savingsKWhProcentText; // -25% (unter kWh)
-    public TextMeshProUGUI chfText;           // 180 (Hauptwert)
+    public TextMeshProUGUI chfText;           // 180 (Hauptwert links unten)
     public TextMeshProUGUI savingsChfText;    // -60 CHF (unter CHF)
-    public TextMeshProUGUI solarText;         // 598 (Hauptwert rechts)
+    public TextMeshProUGUI solarText;         // 598 (Hauptwert rechts oben)
     public TextMeshProUGUI savingsSolarText;  // +54 (unter Solar)
     public TextMeshProUGUI waterText;         // 159 (Hauptwert rechts unten)
     public TextMeshProUGUI savingsWaterText;  // +14 (unter Wasser)
