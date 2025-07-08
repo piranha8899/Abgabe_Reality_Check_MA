@@ -158,8 +158,8 @@ PlayerSettings:
   targetPixelDensity: 30
   resolutionScalingMode: 0
   resetResolutionOnWindowResize: 0
-  androidSupportedAspectRatio: 2
-  androidMaxAspectRatio: 2
+  androidSupportedAspectRatio: 0
+  androidMaxAspectRatio: 2.1
   applicationIdentifier:
     Android: com.UnityTechnologies.com.unity.template.urpblank
     Standalone: com.Unity-Technologies.com.unity.template.urp-blank
